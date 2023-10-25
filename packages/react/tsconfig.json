@@ -1,0 +1,5 @@
+{
+	"extends": "@virtual-grid/tsconfig/react-library.json",
+	"include": [".", ".eslintrc.js"],
+	"exclude": ["dist", "build", "node_modules"]
+}

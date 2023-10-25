@@ -1,3 +1,4 @@
 module.exports = {
-  extends: ["custom/next"],
+	root: true,
+	extends: ['@virtual-grid/eslint-config/base', '@virtual-grid/eslint-config/next']
 };

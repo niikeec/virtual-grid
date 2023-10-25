@@ -1,0 +1,39 @@
+## useGrid
+
+```tsx copy filename="app/page.tsx"
+import { useGrid } from '@virtual-grid/react';
+import * as React from 'react';
+
+const Page = () => {
+	const ref = React.useRef<HTMLDivElement>(null);
+
+	const grid = useGrid({
+		scrollRef: ref,
+		count: 1000,
+		size: 120
+		// ...
+	});
+
+	// ...
+};
+```
+
+## Configurations
+
+| Option            | Type                                                                                               | Required | Description                                                                                                         |
+| :---------------- | :------------------------------------------------------------------------------------------------- | :------- | ------------------------------------------------------------------------------------------------------------------- |
+| scrollRef         | `RefObject<Element>`                                                                               | Yes      | Reference to the scrollable element                                                                                 |
+| count             | number                                                                                             | Yes      | Number of items to render                                                                                           |
+| totalCount        | number                                                                                             | No       | Total number of items to render. Can be used to achieve a seamless scroll behaviour when combined with `onLoadMore` |
+| size              | number \| `{width: number, height: number}`                                                        | No / Yes | Size of rendered items <br /> **Required if `columns` isn't passed**                                                |
+| columns           | number                                                                                             | No / Yes | Number of columns to render <br /> **Required if `size` isn't passed**                                              |
+| width             | number                                                                                             | No       | Width of the grid container                                                                                         |
+| padding           | number \| `{x?: number, y?: number, top?: number, bottom?: number, left?: number, right?: number}` | No       | Grid padding                                                                                                        |
+| gap               | number \| `{x?: number, y?: number}`                                                               | No       | Grid gap                                                                                                            |
+| invert            | boolean                                                                                            | No       | Invert grid                                                                                                         |
+| getItemId         | function                                                                                           | No       | Callback for overriding the grid item id                                                                            |
+| getItemData       | function                                                                                           | No       | Callback for grid item data                                                                                         |
+| rowVirtualizer    | VirtualizerOptions                                                                                 | No       | Row virtualizer options                                                                                             |
+| columnVirtualizer | VirtualizerOptions                                                                                 | No       | Column virtualizer options                                                                                          |
+| onLoadMore        | function                                                                                           | No       | Renders an area which triggers the callback when scrolled into view                                                 |
+| loadMoreHeight    | number                                                                                             | No       | Set the height of the load more area                                                                                |

@@ -1,0 +1,29 @@
+## Grid
+
+This component renders the grid.
+
+```tsx copy filename="app/page.tsx"
+import { Grid, useGrid } from '@virtual-grid/react';
+import * as React from 'react';
+
+const Page = () => {
+	const ref = React.useRef<HTMLDivElement>(null);
+
+	const grid = useGrid({
+		scrollRef: ref,
+		count: 1000,
+		size: 120
+		// ...
+	});
+
+	return (
+		<div ref={ref} style={{ height: '400px', overflow: 'auto' }}>
+			<Grid grid={grid}>{(i) => <div key={i}>...</div>}</Grid>
+		</div>
+	);
+};
+```
+
+| Option | Type      | Required | Description                                                                                      |
+| :----- | :-------- | :------- | ------------------------------------------------------------------------------------------------ |
+| grid   | GridProps | Yes      | Returned value by the [useGrid](https://docs.virtual-grid.com/api-reference/react/use-grid) hook |

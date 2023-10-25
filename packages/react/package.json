@@ -1,0 +1,48 @@
+{
+	"name": "@virtual-grid/react",
+	"version": "0.0.0",
+	"license": "MIT",
+	"exports": {
+		"types": "./dist/index.d.ts",
+		"import": "./dist/index.mjs",
+		"require": "./dist/index.js"
+	},
+	"types": "./dist/index.d.ts",
+	"scripts": {
+		"clean": "rm -rf .turbo node_modules",
+		"lint": "eslint .",
+		"build": "tsup src/index.tsx",
+		"dev": "tsup src/index.tsx --watch"
+	},
+	"peerDependencies": {
+		"next": "*",
+		"react": "^17.0.2 || ^18.0.0"
+	},
+	"peerDependenciesMeta": {
+		"next": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@turbo/gen": "^1.10.12",
+		"@types/node": "^20.5.2",
+		"@types/react": "^18.2.0",
+		"@types/react-dom": "^18.2.0",
+		"@virtual-grid/core": "workspace:*",
+		"@virtual-grid/eslint-config": "workspace:*",
+		"@virtual-grid/tsconfig": "workspace:*",
+		"@virtual-grid/tsup-config": "workspace:*",
+		"eslint": "^8.52.0",
+		"next": "13.5.6",
+		"react": "^18.2.0",
+		"tsup": "6.7.0",
+		"typescript": "^4.5.2"
+	},
+	"dependencies": {
+		"@rooks/use-mutation-observer": "^4.11.2",
+		"@tanstack/react-virtual": "3.0.0-beta.66",
+		"react-intersection-observer": "^9.5.2",
+		"use-resize-observer": "^9.1.0",
+		"valtio": "^1.11.2"
+	}
+}
