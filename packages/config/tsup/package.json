@@ -1,14 +1,10 @@
 {
-	"name": "@virtual-grid/tsup-config",
-	"version": "0.1.0",
-	"private": true,
-	"main": "index.js",
-	"types": "index.d.ts",
-	"scripts": {
-		"clean": "rm -rf .turbo node_modules"
-	},
-	"devDependencies": {
-		"@types/node": "18.16.0",
-		"tsup": "6.7.0"
-	}
+  "name": "@virtual-grid/tsup-config",
+  "version": "0.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "devDependencies": {
+    "@types/node": "20.8.9",
+    "tsup": "7.2.0"
+  }
 }

@@ -1,22 +1,29 @@
 {
-	"private": true,
-	"scripts": {
-		"clean": "rm -rf node_modules",
-		"clean:workspaces": "turbo clean",
-		"build": "turbo run build",
-		"dev": "turbo run dev",
-		"lint": "turbo run lint",
-		"format": "prettier --write \"**/*.{ts,tsx,md}\""
-	},
-	"devDependencies": {
-		"@virtual-grid/tsconfig": "workspace:*",
-		"@virtual-grid/eslint-config": "workspace:*",
-		"@ianvs/prettier-plugin-sort-imports": "^4.1.0",
-		"prettier": "^3.0.3",
-		"prettier-plugin-tailwindcss": "^0.5.4",
-		"turbo": "latest",
-		"typescript": "^5.1.6"
-	},
-	"packageManager": "pnpm@8.6.10",
-	"name": "use-virtual-grid"
+  "name": "virtual-grid",
+  "private": true,
+  "packageManager": "pnpm@8.9.2",
+  "engines": {
+    "node": ">=v18.18.2",
+    "pnpm": ">=8.9.2"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "build:packages": "turbo run build --filter \"./packages/*\"",
+    "build:apps": "turbo run build --filter \"./apps/*\"",
+    "dev": "turbo run dev",
+    "dev:apps": "turbo run dev --filter \"./apps/*\"",
+    "dev:packages": "turbo run dev --filter \"./packages/*\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,mdx}\""
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
+    "@virtual-grid/eslint-config": "workspace:*",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6",
+    "turbo": "latest",
+    "typescript": "^4.5.2"
+  }
 }

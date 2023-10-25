@@ -2,141 +2,141 @@ import type { GridItem, GridItemData, GridItemId, GridPadding } from './types';
 import type { RequireAtLeastOne } from './utils/types';
 
 export interface DefaultGridProps<IdT extends GridItemId, DataT extends GridItemData> {
-	count: number;
-	totalCount?: number;
-	size?: number | { width: number; height: number };
-	columns?: number;
-	width?: number;
-	padding?: number | GridPadding;
-	gap?: number | { x?: number; y?: number };
-	invert?: boolean;
-	getItemId?: (index: number) => IdT | undefined;
-	getItemData?: (index: number) => DataT;
+  count: number;
+  totalCount?: number;
+  size?: number | { width: number; height: number };
+  columns?: number;
+  width?: number;
+  padding?: number | GridPadding;
+  gap?: number | { x?: number; y?: number };
+  invert?: boolean;
+  getItemId?: (index: number) => IdT | undefined;
+  getItemData?: (index: number) => DataT;
 }
 
 export interface SizeGridProps<IdT extends GridItemId, DataT extends GridItemData>
-	extends DefaultGridProps<IdT, DataT> {
-	size: number | { width: number; height: number };
+  extends DefaultGridProps<IdT, DataT> {
+  size: number | { width: number; height: number };
 }
 
 export interface ColumnsGridProps<IdT extends GridItemId, DataT extends GridItemData>
-	extends DefaultGridProps<IdT, DataT> {
-	columns: number;
+  extends DefaultGridProps<IdT, DataT> {
+  columns: number;
 }
 
 export type GridProps<IdT extends GridItemId, DataT extends GridItemData> =
-	| RequireAtLeastOne<SizeGridProps<IdT, DataT>, 'columns' | 'width'>
-	| RequireAtLeastOne<ColumnsGridProps<IdT, DataT>, 'size' | 'width'>;
+  | RequireAtLeastOne<SizeGridProps<IdT, DataT>, 'columns' | 'width'>
+  | RequireAtLeastOne<ColumnsGridProps<IdT, DataT>, 'size' | 'width'>;
 
 export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
-	props: GridProps<IdT, DataT>
+  props: GridProps<IdT, DataT>
 ) => {
-	const count = !props.totalCount ? props.count : Math.max(props.count, props.totalCount);
+  const count = !props.totalCount ? props.count : Math.max(props.count, props.totalCount);
 
-	const getPadding = (key: keyof GridPadding) => {
-		return typeof props.padding === 'object' ? props.padding[key] : props.padding;
-	};
+  const getPadding = (key: keyof GridPadding) => {
+    return typeof props.padding === 'object' ? props.padding[key] : props.padding;
+  };
 
-	const padding = {
-		top: getPadding('top') ?? getPadding('y') ?? 0,
-		bottom: getPadding('bottom') ?? getPadding('y') ?? 0,
-		left: getPadding('left') ?? getPadding('x') ?? 0,
-		right: getPadding('right') ?? getPadding('x') ?? 0
-	};
+  const padding = {
+    top: getPadding('top') ?? getPadding('y') ?? 0,
+    bottom: getPadding('bottom') ?? getPadding('y') ?? 0,
+    left: getPadding('left') ?? getPadding('x') ?? 0,
+    right: getPadding('right') ?? getPadding('x') ?? 0
+  };
 
-	const gap = {
-		x: (typeof props.gap === 'object' ? props.gap.x : props.gap) ?? 0,
-		y: (typeof props.gap === 'object' ? props.gap.y : props.gap) ?? 0
-	};
+  const gap = {
+    x: (typeof props.gap === 'object' ? props.gap.x : props.gap) ?? 0,
+    y: (typeof props.gap === 'object' ? props.gap.y : props.gap) ?? 0
+  };
 
-	const size = {
-		width: typeof props.size === 'object' ? props.size.width : props.size,
-		height: typeof props.size === 'object' ? props.size.height : props.size
-	};
+  const size = {
+    width: typeof props.size === 'object' ? props.size.width : props.size,
+    height: typeof props.size === 'object' ? props.size.height : props.size
+  };
 
-	const gridWidth = props.width ? props.width - (padding.left + padding.right) : 0;
+  const gridWidth = props.width ? props.width - (padding.left + padding.right) : 0;
 
-	let columnCount = props.columns ?? 0;
+  let columnCount = props.columns ?? 0;
 
-	if (!columnCount && size.width) {
-		let columns = Math.floor(gridWidth / size.width);
-		if (gap.x) columns = Math.floor((gridWidth - (columns - 1) * gap.x) / size.width);
-		columnCount = columns;
-	}
+  if (!columnCount && size.width) {
+    let columns = Math.floor(gridWidth / size.width);
+    if (gap.x) columns = Math.floor((gridWidth - (columns - 1) * gap.x) / size.width);
+    columnCount = columns;
+  }
 
-	const rowCount = columnCount > 0 ? Math.ceil(props.count / columnCount) : 0;
-	const totalRowCount = columnCount > 0 ? Math.ceil(count / columnCount) : 0;
+  const rowCount = columnCount > 0 ? Math.ceil(props.count / columnCount) : 0;
+  const totalRowCount = columnCount > 0 ? Math.ceil(count / columnCount) : 0;
 
-	const virtualItemWidth =
-		columnCount > 0
-			? (props.columns && size.width) || (gridWidth - (columnCount - 1) * gap.x) / columnCount
-			: 0;
+  const virtualItemWidth =
+    columnCount > 0
+      ? (props.columns && size.width) || (gridWidth - (columnCount - 1) * gap.x) / columnCount
+      : 0;
 
-	const virtualItemHeight = size.height ?? virtualItemWidth;
+  const virtualItemHeight = size.height ?? virtualItemWidth;
 
-	const getItem = (index: number) => {
-		if (index < 0 || index >= props.count) return;
+  const getItem = (index: number) => {
+    if (index < 0 || index >= props.count) return;
 
-		const id = props.getItemId?.(index) ?? index;
-		const data = props.getItemData?.(index);
+    const id = props.getItemId?.(index) ?? index;
+    const data = props.getItemData?.(index);
 
-		const column = index % columnCount;
-		const row = Math.floor(index / columnCount);
+    const column = index % columnCount;
+    const row = Math.floor(index / columnCount);
 
-		const _row = props.invert ? props.count - 1 - row : row;
+    const _row = props.invert ? props.count - 1 - row : row;
 
-		const x = padding.left + (column !== 0 ? gap.x : 0) * column + virtualItemWidth * column;
-		const y = padding.top + (_row !== 0 ? gap.y : 0) * _row + virtualItemHeight * _row;
+    const x = padding.left + (column !== 0 ? gap.x : 0) * column + virtualItemWidth * column;
+    const y = padding.top + (_row !== 0 ? gap.y : 0) * _row + virtualItemHeight * _row;
 
-		const item: GridItem<typeof id, DataT | undefined> = {
-			index,
-			id,
-			data,
-			row,
-			column,
-			rect: {
-				height: virtualItemHeight,
-				width: virtualItemWidth,
-				top: y,
-				bottom: y + virtualItemHeight,
-				left: x,
-				right: x + virtualItemWidth,
-				x,
-				y
-			}
-		};
+    const item: GridItem<typeof id, DataT | undefined> = {
+      index,
+      id,
+      data,
+      row,
+      column,
+      rect: {
+        height: virtualItemHeight,
+        width: virtualItemWidth,
+        top: y,
+        bottom: y + virtualItemHeight,
+        left: x,
+        right: x + virtualItemWidth,
+        x,
+        y
+      }
+    };
 
-		return item;
-	};
+    return item;
+  };
 
-	const getItemHeight = (index: number) => {
-		return virtualItemHeight + (index !== 0 ? gap.y : 0);
-	};
+  const getItemHeight = (index: number) => {
+    return virtualItemHeight + (index !== 0 ? gap.y : 0);
+  };
 
-	const getItemWidth = (index: number) => {
-		return virtualItemWidth + (index !== 0 ? gap.x : 0);
-	};
+  const getItemWidth = (index: number) => {
+    return virtualItemWidth + (index !== 0 ? gap.x : 0);
+  };
 
-	return {
-		gap,
-		padding,
-		rowCount,
-		totalRowCount,
-		columnCount,
-		count: props.count,
-		invert: props.invert,
-		itemSize: {
-			width: size.width,
-			height: size.height
-		},
-		virtualItemSize: {
-			width: virtualItemWidth,
-			height: virtualItemHeight
-		},
-		getItemHeight,
-		getItemWidth,
-		getItem
-	};
+  return {
+    gap,
+    padding,
+    rowCount,
+    totalRowCount,
+    columnCount,
+    count: props.count,
+    invert: props.invert,
+    itemSize: {
+      width: size.width,
+      height: size.height
+    },
+    virtualItemSize: {
+      width: virtualItemWidth,
+      height: virtualItemHeight
+    },
+    getItemHeight,
+    getItemWidth,
+    getItem
+  };
 };
 
 export type { GridItem, GridItemData, GridItemId } from './types';
