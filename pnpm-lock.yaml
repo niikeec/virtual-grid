@@ -252,6 +252,9 @@ importers:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.66
         version: 3.0.0-beta.66(react@18.2.0)
+      '@virtual-grid/core':
+        specifier: 1.0.0
+        version: link:../core
       react-intersection-observer:
         specifier: ^9.5.2
         version: 9.5.2(react@18.2.0)
@@ -271,9 +274,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.7
         version: 18.2.14
-      '@virtual-grid/core':
-        specifier: workspace:*
-        version: link:../core
       '@virtual-grid/eslint-config':
         specifier: workspace:*
         version: link:../config/eslint-config
