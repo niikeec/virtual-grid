@@ -1,4 +1,5 @@
 {
+  "name": "virtual-grid",
   "private": true,
   "packageManager": "pnpm@8.9.2",
   "engines": {
