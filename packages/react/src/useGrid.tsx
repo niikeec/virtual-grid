@@ -17,11 +17,11 @@ export type UseGridProps<IdT extends Core.GridItemId, DataT extends Core.GridIte
   /**
    * Row virtualizer options.
    */
-  rowVirtualizer?: VirtualizerOptions;
+  rowVirtualizer?: Partial<VirtualizerOptions>;
   /**
    * Column virtualizer options.
    */
-  columnVirtualizer?: VirtualizerOptions;
+  columnVirtualizer?: Partial<VirtualizerOptions>;
   /**
    * Renders an area which triggers `onLoadMore` when scrolled into view.
    */
