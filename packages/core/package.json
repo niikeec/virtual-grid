@@ -1,6 +1,6 @@
 {
   "name": "@virtual-grid/core",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "exports": {
     "types": "./dist/index.d.ts",
