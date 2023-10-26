@@ -21,7 +21,7 @@
   "dependencies": {
     "@rooks/use-mutation-observer": "^4.11.2",
     "@tanstack/react-virtual": "3.0.0-beta.66",
-    "@virtual-grid/core": "workspace:*",
+    "@virtual-grid/core": "^1.0.0",
     "react-intersection-observer": "^9.5.2",
     "use-resize-observer": "^9.1.0",
     "valtio": "^1.11.3"
