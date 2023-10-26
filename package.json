@@ -1,5 +1,4 @@
 {
-  "name": "virtual-grid",
   "private": true,
   "packageManager": "pnpm@8.9.2",
   "engines": {
@@ -15,9 +14,12 @@
     "dev:packages": "turbo run dev --filter \"./packages/*\"",
     "clean": "turbo run clean && rm -rf node_modules",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,mdx}\""
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\"",
+    "publish-packages": "turbo run build lint typecheck && changeset version && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@virtual-grid/eslint-config": "workspace:*",
     "eslint": "^8.52.0",

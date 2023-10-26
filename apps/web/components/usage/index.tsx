@@ -12,7 +12,7 @@ const codeBlocks: Record<UsageTypes, string> = {
 
 export const Usage = () => {
   return (
-    <div className="mt-20 w-full max-w-screen-sm">
+    <div className="mt-10 w-full max-w-screen-sm sm:mt-20">
       <Tabs defaultValue="component" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="component" className="w-full">

@@ -7,27 +7,9 @@ const theme = {
   plain: {},
   styles: [
     {
-      types: ['comment'],
+      types: ['atrule', 'keyword', 'attr-name', 'selector', 'punctuation', 'comment'],
       style: {
         color: 'hsl(var(--muted-foreground))'
-      }
-    },
-    {
-      types: ['atrule', 'keyword', 'attr-name', 'selector'],
-      style: {
-        color: 'hsl(var(--muted-foreground))'
-      }
-    },
-    {
-      types: ['punctuation', 'operator'],
-      style: {
-        color: 'hsl(var(--muted-foreground))'
-      }
-    },
-    {
-      types: ['class-name', 'function', 'tag'],
-      style: {
-        color: 'var(--gray12)'
       }
     }
   ]
@@ -37,10 +19,10 @@ export const Code = ({ code }: { code: string }) => {
   return (
     <Highlight code={code} theme={theme} language="jsx">
       {({ style, tokens, getLineProps, getTokenProps }) => (
-        <div className="from-accent to-secondary/50 relative overflow-hidden rounded-md border bg-gradient-to-tr p-4">
-          <pre className="overflow-auto text-xs" style={style}>
+        <div className="from-accent to-secondary/50 relative overflow-hidden rounded-md border bg-gradient-to-tr">
+          <pre className="grid overflow-auto py-4 text-xs" style={style}>
             {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line })}>
+              <div key={i} {...getLineProps({ line, className: 'px-4' })}>
                 {line.map((token, key) => (
                   <span key={key} {...getTokenProps({ token })} />
                 ))}
