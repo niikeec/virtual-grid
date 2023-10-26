@@ -103,8 +103,9 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
                   transform: `translateX(${virtualColumn.start}px) translateY(${
                     virtualRow.start - rowVirtualizer.options.scrollMargin
                   }px)`,
-                  paddingLeft: virtualColumn.index !== 0 ? grid.gap.x : 0,
-                  paddingTop: virtualRow.index !== 0 ? grid.gap.y : 0
+                  paddingLeft: virtualColumn.size && virtualColumn.index !== 0 ? grid.gap.x : 0,
+                  paddingTop: virtualRow.size && virtualRow.index !== 0 ? grid.gap.y : 0,
+                  visibility: !virtualRow.size || !virtualColumn.size ? 'hidden' : undefined
                 }}
               >
                 <div

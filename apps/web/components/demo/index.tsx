@@ -31,7 +31,7 @@ export const Demo = () => {
           {(index) => (
             <div
               key={index}
-              className="border-border/80  bg-accent h-full w-full rounded-lg border"
+              className="border-border/80 bg-accent h-full w-full rounded-lg border"
             />
           )}
         </Grid>

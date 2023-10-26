@@ -58,7 +58,7 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
 
   let columnCount = props.columns ?? 0;
 
-  if (!columnCount && size.width) {
+  if (!columnCount && size.width && gridWidth) {
     let columns = Math.floor(gridWidth / size.width);
     if (gap.x) columns = Math.floor((gridWidth - (columns - 1) * gap.x) / size.width);
     columnCount = columns;
@@ -69,7 +69,8 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
 
   const virtualItemWidth =
     columnCount > 0
-      ? (props.columns && size.width) || (gridWidth - (columnCount - 1) * gap.x) / columnCount
+      ? (props.columns && size.width) ||
+        (gridWidth ? (gridWidth - (columnCount - 1) * gap.x) / columnCount : 0)
       : 0;
 
   const virtualItemHeight = size.height ?? virtualItemWidth;
@@ -110,11 +111,11 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
   };
 
   const getItemHeight = (index: number) => {
-    return virtualItemHeight + (index !== 0 ? gap.y : 0);
+    return virtualItemHeight ? virtualItemHeight + (index !== 0 ? gap.y : 0) : 0;
   };
 
   const getItemWidth = (index: number) => {
-    return virtualItemWidth + (index !== 0 ? gap.x : 0);
+    return virtualItemWidth ? virtualItemWidth + (index !== 0 ? gap.x : 0) : 0;
   };
 
   return {
