@@ -38,11 +38,29 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Check packages
+        run: pnpm turbo --filter "./packages/*" build lint typecheck
+
+      - name: Authenticate npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
       - name: Create Release
         id: changeset
-        uses: changesets/action@v1.4.5
+        uses: changesets/action@v1.4.1
         with:
-          publish: pnpm publish-packages
+          commit: 'chore(release): 📦 version packages'
+          title: 'chore(release): 📦 version packages'
+          publish: npx changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Sync lockfile
+        if: steps.changeset.outputs.hasChangesets == 'true'
+        run: |
+          git checkout changeset-release/main
+          pnpm install --no-frozen-lockfile
+          git add .
+          git commit -m "chore(release): 📦 sync lockfile"
+          git push origin changeset-release/main
