@@ -47,6 +47,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://www.virtual-grid.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niikeec/virtual-grid.git"
+  },
   "keywords": [
     "react",
     "virtual",

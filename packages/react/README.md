@@ -2,7 +2,7 @@
 
 Virtualized grid powered by [@tanstack/virtual](https://tanstack.com/virtual/v3)
 
-[Demo]() - [Docs]()
+[Demo](https://www.virtual-grid.com/) - [Docs](https://docs.virtual-grid.com/getting-started/react)
 
 ## Installation
 
@@ -36,7 +36,7 @@ const App = () => {
 };
 ```
 
-For a headless solution check out the example in the [docs]().
+For a headless solution check out the example in the [docs](https://docs.virtual-grid.com/getting-started/react).
 
 ## License
 
