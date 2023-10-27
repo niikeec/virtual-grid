@@ -3,24 +3,20 @@
   "version": "1.0.0",
   "license": "MIT",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.js"
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
   },
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/*"
-      ]
-    }
-  },
   "scripts": {
-    "build": "tsup src/index.tsx",
-    "dev": "tsup src/index.tsx --watch",
+    "build": "tsup",
+    "dev": "wait-on ../core/dist/index.mjs && tsup --watch",
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
@@ -42,12 +38,18 @@
     "@virtual-grid/tsup-config": "workspace:*",
     "react": "^18.2.0",
     "tsup": "7.2.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "wait-on": "^7.0.1"
   },
   "peerDependencies": {
     "react": "^17.0.2 || ^18.0.0"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "react",
+    "virtual",
+    "grid"
+  ]
 }
