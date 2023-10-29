@@ -1,5 +1,11 @@
 # @virtual-grid/react
 
+## 1.0.1
+
+### Patch Changes
+
+- Render improvement of grid items and load more trigger
+
 ## 1.0.0
 
 ### Major Changes
