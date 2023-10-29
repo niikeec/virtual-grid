@@ -14,9 +14,8 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const [listOffset, setListOffset] = React.useState(0);
-  const [inView, setInView] = React.useState(false);
 
-  const { ref: loadMoreRef } = useInView({ onChange: (e) => grid.onLoadMore && setInView(e) });
+  const { ref: loadMoreRef, inView } = useInView();
 
   const rowVirtualizer = useVirtualizer({
     ...grid.virtualizer.rowVirtualizer,
@@ -30,6 +29,9 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
 
   const width = columnVirtualizer.getTotalSize();
   const height = rowVirtualizer.getTotalSize();
+
+  const internalWidth = width - (grid.padding.left + grid.padding.right);
+  const internalHeight = height - (grid.padding.top + grid.padding.bottom);
 
   const loadMoreTriggerHeight = React.useMemo(() => {
     if (!virtualRows.length || !grid.onLoadMore) return;
@@ -52,7 +54,7 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
 
   React.useEffect(() => {
     inView && grid.onLoadMore?.();
-  }, [inView, grid]);
+  }, [grid, inView]);
 
   useMutationObserver(ref, () => setListOffset(ref.current?.offsetTop ?? 0));
 
@@ -63,65 +65,67 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
       {...props}
       ref={ref}
       style={{
+        ...props.style,
         position: 'relative',
-        width,
-        height,
-        visibility: !width || !height ? 'hidden' : 'visible',
-        ...props.style
+        width: width,
+        height: height
       }}
     >
-      <div
-        ref={loadMoreRef}
-        style={{
-          background: 'blue',
-          position: 'absolute',
-          height: loadMoreTriggerHeight,
-          width: '100%',
-          top: grid.invert ? 0 : undefined,
-          bottom: !grid.invert ? 0 : undefined
-        }}
-      />
+      {internalWidth <= 0 || internalHeight <= 0 ? null : (
+        <>
+          <div
+            ref={loadMoreRef}
+            style={{
+              position: 'absolute',
+              height: loadMoreTriggerHeight,
+              width: '100%',
+              top: grid.invert ? 0 : undefined,
+              bottom: !grid.invert ? 0 : undefined,
+              display: !grid.onLoadMore ? 'none' : undefined
+            }}
+          />
 
-      {virtualRows.map((virtualRow) => (
-        <React.Fragment key={virtualRow.index}>
-          {virtualColumns.map((virtualColumn) => {
-            let index = virtualRow.index * grid.columnCount + virtualColumn.index;
+          {virtualRows.map((virtualRow) => (
+            <React.Fragment key={virtualRow.index}>
+              {virtualColumns.map((virtualColumn) => {
+                let index = virtualRow.index * grid.columnCount + virtualColumn.index;
 
-            if (grid.invert) index = grid.count - 1 - index;
+                if (grid.invert) index = grid.count - 1 - index;
 
-            if (index >= grid.count || index < 0) return null;
+                if (index >= grid.count || index < 0) return null;
 
-            return (
-              <div
-                key={virtualColumn.index}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: `${virtualColumn.size}px`,
-                  height: `${virtualRow.size}px`,
-                  transform: `translateX(${virtualColumn.start}px) translateY(${
-                    virtualRow.start - rowVirtualizer.options.scrollMargin
-                  }px)`,
-                  paddingLeft: virtualColumn.size && virtualColumn.index !== 0 ? grid.gap.x : 0,
-                  paddingTop: virtualRow.size && virtualRow.index !== 0 ? grid.gap.y : 0,
-                  visibility: !virtualRow.size || !virtualColumn.size ? 'hidden' : undefined
-                }}
-              >
-                <div
-                  style={{
-                    margin: 'auto',
-                    width: grid.itemSize.width ?? '100%',
-                    height: grid.itemSize.height ?? '100%'
-                  }}
-                >
-                  {children(index)}
-                </div>
-              </div>
-            );
-          })}
-        </React.Fragment>
-      ))}
+                return (
+                  <div
+                    key={virtualColumn.index}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: `${virtualColumn.size}px`,
+                      height: `${virtualRow.size}px`,
+                      transform: `translateX(${virtualColumn.start}px) translateY(${
+                        virtualRow.start - rowVirtualizer.options.scrollMargin
+                      }px)`,
+                      paddingLeft: virtualColumn.index !== 0 ? grid.gap.x : 0,
+                      paddingTop: virtualRow.index !== 0 ? grid.gap.y : 0
+                    }}
+                  >
+                    <div
+                      style={{
+                        margin: 'auto',
+                        width: grid.itemSize.width ?? '100%',
+                        height: grid.itemSize.height ?? '100%'
+                      }}
+                    >
+                      {children(index)}
+                    </div>
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </>
+      )}
     </div>
   );
 };
