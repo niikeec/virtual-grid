@@ -1,5 +1,4 @@
-import * as React from 'react';
-import useMutationObserver from '@rooks/use-mutation-observer';
+import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useInView } from 'react-intersection-observer';
 
@@ -13,13 +12,13 @@ export interface GridProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
 export const Grid = ({ grid, children, ...props }: GridProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const [listOffset, setListOffset] = React.useState(0);
+  const [offset, setOffset] = React.useState(0);
 
   const { ref: loadMoreRef, inView } = useInView();
 
   const rowVirtualizer = useVirtualizer({
     ...grid.virtualizer.rowVirtualizer,
-    scrollMargin: listOffset
+    scrollMargin: offset
   });
 
   const columnVirtualizer = useVirtualizer(grid.virtualizer.columnVirtualizer);
@@ -34,15 +33,30 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
   const internalHeight = height - (grid.padding.top + grid.padding.bottom);
 
   const loadMoreTriggerHeight = React.useMemo(() => {
-    if (!virtualRows.length || !grid.onLoadMore) return;
+    if (!grid.onLoadMore || !grid.rowCount || !grid.totalRowCount) return;
 
     if (grid.totalRowCount === grid.rowCount) return grid.loadMoreHeight;
 
-    const [offset] = rowVirtualizer.getOffsetForIndex(grid.rowCount - 1, 'center');
-    if (!offset) return;
+    const lastRowTop = grid.getItemRect(grid.rowCount * grid.columnCount).top;
+    if (!lastRowTop) return;
 
-    return height - offset;
-  }, [grid, height, rowVirtualizer, virtualRows.length]);
+    let loadMoreHeight = grid.loadMoreHeight ?? 0;
+
+    if (!loadMoreHeight && rowVirtualizer.scrollElement) {
+      const offset = Math.max(0, rowVirtualizer.options.scrollMargin - rowVirtualizer.scrollOffset);
+      loadMoreHeight = Math.max(0, rowVirtualizer.scrollElement.clientHeight - offset);
+    }
+
+    const triggerHeight = height - lastRowTop + loadMoreHeight;
+
+    return Math.min(height, triggerHeight);
+  }, [
+    grid,
+    rowVirtualizer.scrollElement,
+    rowVirtualizer.options.scrollMargin,
+    rowVirtualizer.scrollOffset,
+    height
+  ]);
 
   React.useEffect(() => {
     rowVirtualizer.measure();
@@ -56,9 +70,20 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
     inView && grid.onLoadMore?.();
   }, [grid, inView]);
 
-  useMutationObserver(ref, () => setListOffset(ref.current?.offsetTop ?? 0));
+  React.useEffect(() => {
+    const element = grid.scrollRef.current;
+    if (!element) return;
 
-  React.useLayoutEffect(() => setListOffset(ref.current?.offsetTop ?? 0), []);
+    const observer = new MutationObserver(() => setOffset(ref.current?.offsetTop ?? 0));
+
+    observer.observe(element, {
+      childList: true
+    });
+
+    return () => observer.disconnect();
+  }, [grid.scrollRef]);
+
+  React.useLayoutEffect(() => setOffset(ref.current?.offsetTop ?? 0), []);
 
   return (
     <div

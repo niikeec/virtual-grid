@@ -69,6 +69,7 @@ export const useGrid = <IdT extends Core.GridItemId, DataT extends Core.GridItem
 
   return {
     ...grid,
+    scrollRef: scrollRef,
     onLoadMore: props.onLoadMore,
     loadMoreHeight: props.loadMoreHeight,
     virtualizer: {
