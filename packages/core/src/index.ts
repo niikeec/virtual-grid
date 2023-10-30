@@ -153,6 +153,7 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
     getItem,
     getItemHeight,
     getItemWidth,
+    getItemPosition,
     getItemRect
   };
 };
