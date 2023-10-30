@@ -81,13 +81,8 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
     const id = props.getItemId?.(index) ?? index;
     const data = props.getItemData?.(index);
 
-    const column = index % columnCount;
-    const row = Math.floor(index / columnCount);
-
-    const _row = props.invert ? props.count - 1 - row : row;
-
-    const x = padding.left + (column !== 0 ? gap.x : 0) * column + virtualItemWidth * column;
-    const y = padding.top + (_row !== 0 ? gap.y : 0) * _row + virtualItemHeight * _row;
+    const { row, column } = getItemPosition(index);
+    const rect = getItemRect(index);
 
     const item: GridItem<typeof id, DataT | undefined> = {
       index,
@@ -95,16 +90,7 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
       data,
       row,
       column,
-      rect: {
-        height: virtualItemHeight,
-        width: virtualItemWidth,
-        top: y,
-        bottom: y + virtualItemHeight,
-        left: x,
-        right: x + virtualItemWidth,
-        x,
-        y
-      }
+      rect
     };
 
     return item;
@@ -116,6 +102,36 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
 
   const getItemWidth = (index: number) => {
     return virtualItemWidth ? virtualItemWidth + (index !== 0 ? gap.x : 0) : 0;
+  };
+
+  const getItemPosition = (index: number) => ({
+    row: Math.floor(index / columnCount),
+    column: index % columnCount
+  });
+
+  const getItemRect = (index: number) => {
+    const { row, column } = getItemPosition(index);
+
+    const _row = props.invert ? props.count - 1 - row : row;
+
+    const x = virtualItemWidth
+      ? padding.left + (column !== 0 ? gap.x : 0) * column + virtualItemWidth * column
+      : 0;
+
+    const y = virtualItemHeight
+      ? padding.top + (_row !== 0 ? gap.y : 0) * _row + virtualItemHeight * _row
+      : 0;
+
+    return {
+      height: virtualItemHeight,
+      width: virtualItemWidth,
+      top: y,
+      bottom: y + virtualItemHeight,
+      left: x,
+      right: x + virtualItemWidth,
+      x,
+      y
+    } satisfies GridItem['rect'];
   };
 
   return {
@@ -134,9 +150,11 @@ export const grid = <IdT extends GridItemId, DataT extends GridItemData>(
       width: virtualItemWidth,
       height: virtualItemHeight
     },
+    getItem,
     getItemHeight,
     getItemWidth,
-    getItem
+    getItemPosition,
+    getItemRect
   };
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "@virtual-grid/react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "exports": {
     "./package.json": "./package.json",
@@ -22,12 +22,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@rooks/use-mutation-observer": "^4.11.2",
     "@tanstack/react-virtual": "3.0.0-beta.66",
-    "@virtual-grid/core": "^1.0.0",
+    "@virtual-grid/core": "^1.0.1",
     "react-intersection-observer": "^9.5.2",
-    "use-resize-observer": "^9.1.0",
-    "valtio": "^1.11.3"
+    "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.12",

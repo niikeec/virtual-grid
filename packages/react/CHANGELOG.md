@@ -1,5 +1,13 @@
 # @virtual-grid/react
 
+## 1.0.2
+
+### Patch Changes
+
+- Fix grid offset & load more trigger height
+- Updated dependencies
+  - @virtual-grid/core@1.0.1
+
 ## 1.0.1
 
 ### Patch Changes
