@@ -1,5 +1,11 @@
 # @virtual-grid/core
 
+## 1.1.0
+
+### Minor Changes
+
+- Grid horizontal support
+
 ## 1.0.1
 
 ### Patch Changes
