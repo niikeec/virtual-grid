@@ -33,14 +33,14 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
   const internalHeight = height - (grid.padding.top + grid.padding.bottom);
 
   const loadMoreTriggerHeight = React.useMemo(() => {
-    if (!grid.onLoadMore || !grid.rowCount || !grid.totalRowCount) return;
+    if (grid.horizontal || !grid.onLoadMore || !grid.rowCount || !grid.totalRowCount) return;
 
-    if (grid.totalRowCount === grid.rowCount) return grid.loadMoreHeight;
+    if (grid.totalRowCount === grid.rowCount) return grid.loadMoreSize;
 
     const lastRowTop = grid.getItemRect(grid.rowCount * grid.columnCount).top;
     if (!lastRowTop) return;
 
-    let loadMoreHeight = grid.loadMoreHeight ?? 0;
+    let loadMoreHeight = grid.loadMoreSize ?? 0;
 
     if (!loadMoreHeight && rowVirtualizer.scrollElement) {
       const offset = Math.max(0, rowVirtualizer.options.scrollMargin - rowVirtualizer.scrollOffset);
@@ -57,6 +57,21 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
     rowVirtualizer.scrollOffset,
     height
   ]);
+
+  const loadMoreTriggerWidth = React.useMemo(() => {
+    if (!grid.horizontal || !grid.onLoadMore || !grid.columnCount || !grid.totalColumnCount) return;
+
+    if (grid.totalColumnCount === grid.columnCount) return grid.loadMoreSize;
+
+    const lastColumnLeft = grid.getItemRect(grid.rowCount * grid.columnCount).left;
+    if (!lastColumnLeft) return;
+
+    const loadMoreWidth = grid.loadMoreSize ?? columnVirtualizer.scrollElement?.clientWidth ?? 0;
+
+    const triggerWidth = width - lastColumnLeft + loadMoreWidth;
+
+    return Math.min(width, triggerWidth);
+  }, [columnVirtualizer.scrollElement, grid, width]);
 
   React.useEffect(() => {
     rowVirtualizer.measure();
@@ -102,10 +117,10 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
             ref={loadMoreRef}
             style={{
               position: 'absolute',
-              height: loadMoreTriggerHeight,
-              width: '100%',
-              top: grid.invert ? 0 : undefined,
-              bottom: !grid.invert ? 0 : undefined,
+              height: !grid.horizontal ? loadMoreTriggerHeight : '100%',
+              width: grid.horizontal ? loadMoreTriggerWidth : '100%',
+              bottom: !grid.horizontal ? 0 : undefined,
+              right: grid.horizontal ? 0 : undefined,
               display: !grid.onLoadMore ? 'none' : undefined
             }}
           />
@@ -113,7 +128,9 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
           {virtualRows.map((virtualRow) => (
             <React.Fragment key={virtualRow.index}>
               {virtualColumns.map((virtualColumn) => {
-                let index = virtualRow.index * grid.columnCount + virtualColumn.index;
+                let index = grid.horizontal
+                  ? virtualColumn.index * grid.rowCount + virtualRow.index
+                  : virtualRow.index * grid.columnCount + virtualColumn.index;
 
                 if (grid.invert) index = grid.count - 1 - index;
 
@@ -122,6 +139,7 @@ export const Grid = ({ grid, children, ...props }: GridProps) => {
                 return (
                   <div
                     key={virtualColumn.index}
+                    data-index={index}
                     style={{
                       position: 'absolute',
                       top: 0,

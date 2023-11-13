@@ -13,11 +13,23 @@ export const Demo = () => {
   const grid = useGrid({
     scrollRef: ref,
     count: controls.count,
-    ...(controls.size.enabled && {
-      size: { width: controls.size.width, height: controls.size.height },
-      columns: controls.columns.enabled ? controls.columns.count : undefined
-    }),
-    ...(controls.columns.enabled ? { columns: controls.columns.count } : { columns: 0 }),
+    ...(controls.columns.enabled
+      ? {
+          columns: controls.columns.count,
+          ...(controls.size.enabled && {
+            size: {
+              width: controls.size.width || undefined,
+              height: controls.size.height || undefined
+            }
+          })
+        }
+      : {
+          columns: 'auto',
+          size: {
+            width: controls.size.enabled ? controls.size.width : 0,
+            height: controls.size.enabled ? controls.size.height : 0
+          }
+        }),
     padding: controls.padding,
     gap: controls.gap
   });

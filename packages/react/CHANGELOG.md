@@ -1,5 +1,16 @@
 # @virtual-grid/react
 
+## 1.1.0
+
+### Minor Changes
+
+- Grid horizontal support
+
+### Patch Changes
+
+- Updated dependencies
+  - @virtual-grid/core@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes
