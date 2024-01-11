@@ -1,0 +1,25 @@
+{
+  "name": "solid-fixed",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "dependencies": {
+    "@solid-primitives/resize-observer": "^2.0.22",
+    "@tanstack/solid-virtual": "3.0.1",
+    "@virtual-grid/core": "workspace:^1.1.0",
+    "@virtual-grid/shared": "workspace:^",
+    "@virtual-grid/solid": "workspace:*",
+    "solid-js": "^1.8.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vite-plugin-solid": "^2.7.2"
+  }
+}

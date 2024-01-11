@@ -1,0 +1,5 @@
+{
+  "extends": "@virtual-grid/tsconfig/solid-library.json",
+  "include": [".", ".eslintrc.js"],
+  "exclude": ["dist", "node_modules"]
+}
