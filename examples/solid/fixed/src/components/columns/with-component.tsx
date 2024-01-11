@@ -18,7 +18,9 @@ export const ColumnsWithComponent = () => {
     >
       <Grid grid={grid}>
         {(index) => (
-          <div class={index % 2 === 0 ? 'item-even' : 'item-odd'}>{index}</div>
+          <div class={index() % 2 === 0 ? 'item-even' : 'item-odd'}>
+            {index()}
+          </div>
         )}
       </Grid>
       <div style={{ width: '500px', height: '400px', 'flex-shrink': 0 }}></div>

@@ -1,4 +1,12 @@
-import { createEffect, createMemo, For, JSX, on, Show } from 'solid-js';
+import {
+  Accessor,
+  createEffect,
+  createMemo,
+  For,
+  JSX,
+  on,
+  Show
+} from 'solid-js';
 
 import { createVirtualizer, type createGrid } from '..';
 import { createScrollMargin } from '../createScrollMargin';
@@ -6,7 +14,7 @@ import { LoadMoreTrigger } from './load-more-trigger';
 
 export interface GridProps {
   grid: ReturnType<typeof createGrid>;
-  children: (index: number) => JSX.Element;
+  children: (index: Accessor<number>) => JSX.Element;
 }
 
 export const Grid = (props: GridProps) => {
@@ -96,7 +104,7 @@ export const Grid = (props: GridProps) => {
                 <Show when={item()}>
                   {(item) => (
                     <div style={item().style}>
-                      {props.children(item().index)}
+                      {props.children(() => item().index)}
                     </div>
                   )}
                 </Show>

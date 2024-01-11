@@ -18,7 +18,9 @@ export const GridAutoColumnsWithComponent = () => {
     >
       <Grid grid={grid}>
         {(index) => (
-          <div class={index % 2 === 0 ? 'item-even' : 'item-odd'}>{index}</div>
+          <div class={index() % 2 === 0 ? 'item-even' : 'item-odd'}>
+            {index()}
+          </div>
         )}
       </Grid>
     </div>

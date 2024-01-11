@@ -53,7 +53,9 @@ function Vertical() {
     <div ref={ref} style={{ height: '400px', overflow: 'auto' }} class="list">
       <Grid grid={grid}>
         {(index) => (
-          <div class={index % 2 === 0 ? 'item-even' : 'item-odd'}>{index}</div>
+          <div class={index() % 2 === 0 ? 'item-even' : 'item-odd'}>
+            {index()}
+          </div>
         )}
       </Grid>
     </div>
@@ -92,7 +94,9 @@ function Horizontal() {
     <div ref={ref} style={{ height: '400px', overflow: 'auto' }} class="list">
       <Grid grid={grid}>
         {(index) => (
-          <div class={index % 2 === 0 ? 'item-even' : 'item-odd'}>{index}</div>
+          <div class={index() % 2 === 0 ? 'item-even' : 'item-odd'}>
+            {index()}
+          </div>
         )}
       </Grid>
     </div>
