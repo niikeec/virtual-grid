@@ -4,7 +4,6 @@ import {
   Accessor,
   createComputed,
   createEffect,
-  createMemo,
   createSignal,
   JSX,
   on,
@@ -40,7 +39,7 @@ const PROPS = [
   'loadMoreSize'
 ] satisfies (keyof CreateGridProps)[];
 
-const NON_MAUSER_OPTIONS = [
+const NON_MEASURE_OPTIONS = [
   'invert',
   'getItemId',
   'getItemData'
@@ -52,32 +51,21 @@ export const createGrid = <
 >(
   props: CreateGridProps<IdT, DataT>
 ) => {
-  const options = createMemo(() => {
-    const [rest, nonMeasureOptions, measureOptions] = splitProps(
-      props,
-      PROPS,
-      NON_MAUSER_OPTIONS
-    );
+  const [rest, nonMeasureOptions, measureOptions] = splitProps(
+    props,
+    PROPS,
+    NON_MEASURE_OPTIONS
+  );
 
-    return {
-      gridOptions: { ...measureOptions, ...nonMeasureOptions },
-      gridMeasureOptions: measureOptions,
-      rest
-    };
-  });
+  const [width, setWidth] = createSignal(measureOptions.width ?? 0);
+  const [height, setHeight] = createSignal(measureOptions.height ?? 0);
 
-  const [width, setWidth] = createSignal(options().gridOptions.width ?? 0);
-  const [height, setHeight] = createSignal(options().gridOptions.height ?? 0);
-
-  // Initialize grid instance
-  const instance = new Core.Grid({
+  const grid = new Core.Grid({
     width: width(),
     height: height(),
-    ...(options().gridOptions as GridProps<IdT, DataT>)
+    ...measureOptions,
+    ...nonMeasureOptions
   });
-
-  // Proxy instance for reactivity
-  const grid = new Proxy(instance, {});
 
   const [rowVirtualizer, setRowVirtualizer] = createStore({
     ...getRowVirtualizerOptions(grid),
@@ -155,7 +143,7 @@ export const createGrid = <
 
   const [state, setState] = createStore({
     ...getExportableGridState(),
-    ...options().rest,
+    ...rest,
     get width() {
       return width();
     },
@@ -174,13 +162,14 @@ export const createGrid = <
     grid.setOptions({
       width: width(),
       height: height(),
-      ...(options().gridOptions as GridProps<IdT, DataT>)
+      ...measureOptions,
+      ...nonMeasureOptions
     });
   });
 
   // Measure grid when options that require a measure change
   createEffect(
-    on([() => options().gridMeasureOptions, width, height], () => {
+    on([() => ({ ...measureOptions }), width, height], () => {
       grid.measure();
 
       setRowVirtualizer(getRowVirtualizerOptions(grid));
@@ -188,7 +177,7 @@ export const createGrid = <
 
       setState({
         ...getExportableGridState(),
-        ...options().rest,
+        ...rest,
         getVirtualItem: getVirtualItem(),
         getLoadMoreTrigger: getLoadMoreTrigger()
       });
