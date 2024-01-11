@@ -1,7 +1,8 @@
 {
-  "name": "@virtual-grid/core",
+  "name": "@virtual-grid/shared",
   "version": "1.1.0",
   "license": "MIT",
+  "private": true,
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -17,12 +18,14 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rm -rf .turbo node_modules dist",
+    "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@tanstack/virtual-core": "^3.0.0",
     "@types/node": "^20.8.9",
+    "@virtual-grid/core": "^1.1.0",
     "@virtual-grid/eslint-config": "workspace:*",
     "@virtual-grid/tsconfig": "workspace:*",
     "@virtual-grid/tsup-config": "workspace:*",

@@ -25,7 +25,7 @@ const config = {
   rules: {
     '@typescript-eslint/no-unsafe-return': 'off',
     '@typescript-eslint/consistent-type-definitions': 'off',
-    '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
@@ -33,7 +33,8 @@ const config = {
     'typescript-eslint/no-redundant-type-constituents': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
-    '@typescript-eslint/no-redundant-type-constituents': 'off'
+    '@typescript-eslint/no-redundant-type-constituents': 'off',
+    '@typescript-eslint/no-unused-vars': 'off'
   },
   ignorePatterns: [
     'node_modules/',
