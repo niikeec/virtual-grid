@@ -450,8 +450,8 @@ importers:
   packages/shared:
     devDependencies:
       '@tanstack/virtual-core':
-        specifier: ^3.0.0
-        version: 3.0.1
+        specifier: 3.0.0
+        version: 3.0.0
       '@types/node':
         specifier: ^20.8.9
         version: 20.8.9
@@ -512,7 +512,7 @@ importers:
         version: 7.2.0(typescript@4.9.5)
       tsup-preset-solid:
         specifier: 2.1.0
-        version: 2.1.0(esbuild@0.18.20)(solid-js@1.8.10)(tsup@7.2.0)
+        version: 2.1.0(esbuild@0.19.11)(solid-js@1.8.10)(tsup@7.2.0)
       typescript:
         specifier: ^4.5.2
         version: 4.9.5
@@ -3061,11 +3061,6 @@ packages:
 
   /@tanstack/virtual-core@3.0.0:
     resolution: {integrity: sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg==}
-    dev: false
-
-  /@tanstack/virtual-core@3.0.1:
-    resolution: {integrity: sha512-By6TTR3u6rmAWRD7STXqI8WP9q1jYrqVCz88lNTgOf/cUm5cNF6Uj7dej/1+LUj42KMwFusyxGS908HlGBhE2Q==}
-    dev: true
 
   /@theguild/remark-mermaid@0.0.5(react@18.2.0):
     resolution: {integrity: sha512-e+ZIyJkEv9jabI4m7q29wZtZv+2iwPGsXJ2d46Zi7e+QcFudiyuqhLhHG/3gX3ZEB+hxTch+fpItyMS8jwbIcw==}
@@ -4790,7 +4785,7 @@ packages:
       is-symbol: 1.0.4
     dev: true
 
-  /esbuild-plugin-solid@0.5.0(esbuild@0.18.20)(solid-js@1.8.10):
+  /esbuild-plugin-solid@0.5.0(esbuild@0.19.11)(solid-js@1.8.10):
     resolution: {integrity: sha512-ITK6n+0ayGFeDVUZWNMxX+vLsasEN1ILrg4pISsNOQ+mq4ljlJJiuXotInd+HE0MzwTcA9wExT1yzDE2hsqPsg==}
     peerDependencies:
       esbuild: '>=0.12'
@@ -4799,7 +4794,7 @@ packages:
       '@babel/core': 7.23.2
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.2)
       babel-preset-solid: 1.8.9(@babel/core@7.23.2)
-      esbuild: 0.18.20
+      esbuild: 0.19.11
       solid-js: 1.8.10
     transitivePeerDependencies:
       - supports-color
@@ -8827,12 +8822,12 @@ packages:
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  /tsup-preset-solid@2.1.0(esbuild@0.18.20)(solid-js@1.8.10)(tsup@7.2.0):
+  /tsup-preset-solid@2.1.0(esbuild@0.19.11)(solid-js@1.8.10)(tsup@7.2.0):
     resolution: {integrity: sha512-4b63QsUz/1+PDkcQQmBnIUjW+GzlktBjclgAinfQ5DNbQiCBBbcY7tn+0xYykb/MB6rHDoc4b+rHGdgPv51AtQ==}
     peerDependencies:
       tsup: ^7.0.0
     dependencies:
-      esbuild-plugin-solid: 0.5.0(esbuild@0.18.20)(solid-js@1.8.10)
+      esbuild-plugin-solid: 0.5.0(esbuild@0.19.11)(solid-js@1.8.10)
       tsup: 7.2.0(typescript@4.9.5)
     transitivePeerDependencies:
       - esbuild
