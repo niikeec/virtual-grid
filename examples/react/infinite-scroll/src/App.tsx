@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
   useInfiniteQuery
-} from 'react-query';
+} from '@tanstack/react-query';
 
 import { Grid, useGrid } from '@virtual-grid/react';
 
@@ -24,8 +24,11 @@ async function fetchServerPage(
 
 function Vertical() {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfiniteQuery('vertical', (ctx) => fetchServerPage(10, ctx.pageParam), {
-      getNextPageParam: (_lastGroup, groups) => groups.length
+    useInfiniteQuery({
+      queryKey: ['vertical'],
+      queryFn: (ctx) => fetchServerPage(10, ctx.pageParam),
+      getNextPageParam: (_lastGroup, groups) => groups.length,
+      initialPageParam: 0
     });
 
   const allRows = data ? data.pages.flatMap((d) => d.rows) : [];
@@ -62,13 +65,12 @@ function Vertical() {
 
 function Horizontal() {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(
-      'horizontal',
-      (ctx) => fetchServerPage(10, ctx.pageParam),
-      {
-        getNextPageParam: (_lastGroup, groups) => groups.length
-      }
-    );
+    useInfiniteQuery({
+      queryKey: ['horizontal'],
+      queryFn: (ctx) => fetchServerPage(10, ctx.pageParam),
+      getNextPageParam: (_lastGroup, groups) => groups.length,
+      initialPageParam: 0
+    });
 
   const allRows = data ? data.pages.flatMap((d) => d.rows) : [];
 

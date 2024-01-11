@@ -23,7 +23,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@tanstack/virtual-core": "^3.0.0",
+    "@tanstack/virtual-core": "3.0.0",
     "@types/node": "^20.8.9",
     "@virtual-grid/core": "^1.1.0",
     "@virtual-grid/eslint-config": "workspace:*",
