@@ -41,3 +41,20 @@ export type GetVirtualItemProps = (
   | { row: VirtualItem; column?: undefined }
   | { row?: undefined; column: VirtualItem }
 ) & { scrollMargin?: Partial<ScrollMargin> };
+
+export interface LoadMoreTriggerDefaults {
+  /**
+   * Position of the trigger.
+   * @defaultValue bottom
+   */
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  /**
+   * Size of the trigger.
+   * @defaultValue 0
+   */
+  size?: number;
+  /**
+   * Callback when the trigger is visible.
+   */
+  onLoadMore?: () => void;
+}

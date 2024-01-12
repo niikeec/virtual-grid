@@ -17,6 +17,8 @@ import {
   PartialVirtualizerOptions
 } from '@virtual-grid/shared';
 
+import { LoadMoreTriggerProps } from './components';
+
 export type UseGridProps<
   IdT extends Core.GridItemId = Core.GridItemId,
   DataT extends Core.GridItemData = Core.GridItemData
@@ -118,29 +120,24 @@ export const useGrid = <
   const getLoadMoreTrigger = ({
     virtualizer
   }: {
-    virtualizer: Virtualizer<HTMLElement, Element>;
-  }) => {
+    virtualizer?: Virtualizer<HTMLElement, Element>;
+  } = {}) => {
+    const position = grid.options.horizontal ? 'right' : 'bottom';
+
     const getSize = grid.options.horizontal
       ? getLoadMoreTriggerWidth
       : getLoadMoreTriggerHeight;
 
-    const size = onLoadMore
+    const size = virtualizer
       ? getSize({ ...grid, virtualizer, size: loadMoreSize })
-      : undefined;
+      : loadMoreSize;
 
     const style = {
       background: options.debug ? 'red' : undefined,
-      opacity: options.debug ? 0.5 : undefined,
-      position: 'absolute',
-      height: !grid.options.horizontal ? `${size}px` : '100%',
-      width: grid.options.horizontal ? `${size}px` : '100%',
-      bottom: !grid.options.horizontal ? 0 : undefined,
-      right: grid.options.horizontal ? 0 : undefined,
-      display: !onLoadMore ? 'none' : undefined,
-      pointerEvents: 'none'
+      opacity: options.debug ? 0.5 : undefined
     } satisfies React.CSSProperties;
 
-    return { style, onLoadMore };
+    return { position, style, size, onLoadMore } satisfies LoadMoreTriggerProps;
   };
 
   return {
