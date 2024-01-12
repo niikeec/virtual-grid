@@ -31,7 +31,7 @@ export const useGrid = <
   props: UseGridProps<IdT, DataT>
 ) => {
   const { scrollRef, overscan, onLoadMore, loadMoreSize, ...options } = props;
-  const { getItemId, getItemData, invert, debug, ...measureOptions } = options;
+  const { getItemId, getItemData, invert, ...measureOptions } = options;
 
   const [width, setWidth] = React.useState(0);
   const [height, setHeight] = React.useState(0);
@@ -132,12 +132,7 @@ export const useGrid = <
       ? getSize({ ...grid, virtualizer, size: loadMoreSize })
       : loadMoreSize;
 
-    const style = {
-      background: options.debug ? 'red' : undefined,
-      opacity: options.debug ? 0.5 : undefined
-    } satisfies React.CSSProperties;
-
-    return { position, style, size, onLoadMore } satisfies LoadMoreTriggerProps;
+    return { position, size, onLoadMore } satisfies LoadMoreTriggerProps;
   };
 
   return {

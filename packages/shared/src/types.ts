@@ -25,10 +25,6 @@ export type GridProps<
    * The number of items to render beyond the visible area.
    */
   overscan?: number;
-  /**
-   * Toggle debug mode.
-   */
-  debug?: boolean;
 };
 
 export type VirtualizerOptions = VirtualizerOptionsCore<Element, Element>;
