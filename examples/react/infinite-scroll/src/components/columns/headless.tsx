@@ -5,23 +5,24 @@ import { LoadMoreTrigger, useGrid, useVirtualizer } from '@virtual-grid/react';
 
 import { fetchServerPage } from '../../util/fetch';
 
-export const VerticalHeadless = () => {
+export const ColumnsHeadless = () => {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ['vertical-headless'],
+      queryKey: ['columns-headless'],
       queryFn: (ctx) => fetchServerPage(10, ctx.pageParam),
       getNextPageParam: (_lastGroup, groups) => groups.length,
       initialPageParam: 0
     });
 
-  const rows = data ? data.pages.flatMap(({ data }) => data) : [];
+  const columns = data ? data.pages.flatMap(({ data }) => data) : [];
 
   const ref = React.useRef<HTMLDivElement>(null);
 
   const grid = useGrid({
     scrollRef: ref,
-    count: rows.length,
-    size: { height: 100 },
+    count: columns.length,
+    size: { width: 100 },
+    horizontal: true,
     onLoadMore: () => {
       if (hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
@@ -29,7 +30,7 @@ export const VerticalHeadless = () => {
     }
   });
 
-  const virtualizer = useVirtualizer(grid.rowVirtualizer);
+  const virtualizer = useVirtualizer(grid.columnVirtualizer);
 
   return (
     <div
@@ -40,16 +41,16 @@ export const VerticalHeadless = () => {
       <div
         style={{
           position: 'relative',
-          width: `100%`,
-          height: `${virtualizer.getTotalSize()}px`
+          width: `${virtualizer.getTotalSize()}px`,
+          height: `100%`
         }}
       >
-        {virtualizer.getVirtualItems().map((row) => {
-          const item = grid.getVirtualItem({ row });
+        {virtualizer.getVirtualItems().map((column) => {
+          const item = grid.getVirtualItem({ column });
           if (!item) return null;
 
           return (
-            <div key={row.key} style={item.style}>
+            <div key={column.key} style={item.style}>
               <div className={!(item.index % 2) ? 'item-even' : 'item-odd'}>
                 {item.index}
               </div>

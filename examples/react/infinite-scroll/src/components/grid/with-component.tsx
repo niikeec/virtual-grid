@@ -5,24 +5,23 @@ import { Grid, useGrid } from '@virtual-grid/react';
 
 import { fetchServerPage } from '../../util/fetch';
 
-export const HorizontalWithComponent = () => {
+export const GridWithComponent = () => {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ['horizontal-with-component'],
+      queryKey: ['grid-with-component'],
       queryFn: (ctx) => fetchServerPage(10, ctx.pageParam),
       getNextPageParam: (_lastGroup, groups) => groups.length,
       initialPageParam: 0
     });
 
-  const columns = data ? data.pages.flatMap(({ data }) => data) : [];
+  const items = data ? data.pages.flatMap(({ data }) => data) : [];
 
   const ref = React.useRef<HTMLDivElement>(null);
 
   const grid = useGrid({
     scrollRef: ref,
-    count: columns.length,
-    size: { width: 100 },
-    horizontal: true,
+    count: items.length,
+    columns: 3,
     onLoadMore: () => {
       if (hasNextPage && !isFetchingNextPage) {
         fetchNextPage();

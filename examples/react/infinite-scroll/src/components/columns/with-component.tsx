@@ -1,14 +1,14 @@
 import React from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { LoadMoreTrigger, useGrid, useVirtualizer } from '@virtual-grid/react';
+import { Grid, useGrid } from '@virtual-grid/react';
 
 import { fetchServerPage } from '../../util/fetch';
 
-export const HorizontalHeadless = () => {
+export const ColumnsWithComponent = () => {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ['horizontal-headless'],
+      queryKey: ['columns-with-component'],
       queryFn: (ctx) => fetchServerPage(10, ctx.pageParam),
       getNextPageParam: (_lastGroup, groups) => groups.length,
       initialPageParam: 0
@@ -30,36 +30,19 @@ export const HorizontalHeadless = () => {
     }
   });
 
-  const virtualizer = useVirtualizer(grid.columnVirtualizer);
-
   return (
     <div
       ref={ref}
       style={{ height: '400px', overflow: 'auto' }}
       className="list"
     >
-      <div
-        style={{
-          position: 'relative',
-          width: `${virtualizer.getTotalSize()}px`,
-          height: `100%`
-        }}
-      >
-        {virtualizer.getVirtualItems().map((column) => {
-          const item = grid.getVirtualItem({ column });
-          if (!item) return null;
-
-          return (
-            <div key={column.key} style={item.style}>
-              <div className={!(item.index % 2) ? 'item-even' : 'item-odd'}>
-                {item.index}
-              </div>
-            </div>
-          );
-        })}
-
-        <LoadMoreTrigger {...grid.getLoadMoreTrigger()} />
-      </div>
+      <Grid grid={grid}>
+        {(index) => (
+          <div className={index % 2 === 0 ? 'item-even' : 'item-odd'}>
+            {index}
+          </div>
+        )}
+      </Grid>
     </div>
   );
 };

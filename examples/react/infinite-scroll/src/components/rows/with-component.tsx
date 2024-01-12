@@ -5,10 +5,10 @@ import { Grid, useGrid } from '@virtual-grid/react';
 
 import { fetchServerPage } from '../../util/fetch';
 
-export const VerticalWithComponent = () => {
+export const RowsWithComponent = () => {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ['vertical-with-component'],
+      queryKey: ['rows-with-component'],
       queryFn: (ctx) => fetchServerPage(10, ctx.pageParam),
       getNextPageParam: (_lastGroup, groups) => groups.length,
       initialPageParam: 0

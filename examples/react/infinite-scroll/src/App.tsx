@@ -1,24 +1,31 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { HorizontalHeadless } from './components/horizontal/headless';
-import { HorizontalWithComponent } from './components/horizontal/with-component';
+import { ColumnsHeadless } from './components/columns/headless';
+import { ColumnsWithComponent } from './components/columns/with-component';
+import { GridHeadless } from './components/grid/headless';
+import { GridWithComponent } from './components/grid/with-component';
+import { RowsHeadless } from './components/rows/headless';
+import { RowsWithComponent } from './components/rows/with-component';
 import { Section } from './components/section';
-import { VerticalHeadless } from './components/vertical/headless';
-import { VerticalWithComponent } from './components/vertical/with-component';
 
 const queryClient = new QueryClient();
 
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Section name="Vertical">
-        <VerticalWithComponent />
-        <VerticalHeadless />
+      <Section name="Rows">
+        <RowsWithComponent />
+        <RowsHeadless />
       </Section>
 
-      <Section name="Horizontal">
-        <HorizontalWithComponent />
-        <HorizontalHeadless />
+      <Section name="Columns">
+        <ColumnsWithComponent />
+        <ColumnsHeadless />
+      </Section>
+
+      <Section name="Grid">
+        <GridWithComponent />
+        <GridHeadless />
       </Section>
     </QueryClientProvider>
   );
