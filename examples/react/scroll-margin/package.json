@@ -1,5 +1,5 @@
 {
-  "name": "infinite-scroll",
+  "name": "scroll-margin",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.17.9",
     "@virtual-grid/react": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
