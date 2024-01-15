@@ -390,6 +390,9 @@ importers:
       '@virtual-grid/core':
         specifier: ^1.1.0
         version: link:../core
+      '@virtual-grid/shared':
+        specifier: ^1.1.0
+        version: link:../shared
       react-intersection-observer:
         specifier: ^9.5.2
         version: 9.5.3(react@18.2.0)
@@ -412,9 +415,6 @@ importers:
       '@virtual-grid/eslint-config':
         specifier: workspace:*
         version: link:../config/eslint-config
-      '@virtual-grid/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@virtual-grid/tsconfig':
         specifier: workspace:*
         version: link:../config/tsconfig
