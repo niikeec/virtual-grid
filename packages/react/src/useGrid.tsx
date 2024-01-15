@@ -138,11 +138,9 @@ export const useGrid = <
   return {
     ...grid,
     scrollRef,
-    onLoadMore,
-    loadMoreSize,
-    getVirtualItem,
     rowVirtualizer,
     columnVirtualizer,
+    getVirtualItem,
     getLoadMoreTrigger
   };
 };
