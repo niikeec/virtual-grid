@@ -1,5 +1,6 @@
 import {
   VirtualItem,
+  Virtualizer,
   VirtualizerOptions as VirtualizerOptionsCore
 } from '@tanstack/virtual-core';
 
@@ -54,3 +55,11 @@ export interface LoadMoreTriggerDefaults {
    */
   onLoadMore?: () => void;
 }
+
+export type GetLoadMoreTriggerProps = Pick<
+  Core.Grid,
+  'rowCount' | 'columnCount' | 'getItemRect'
+> & {
+  virtualizer: Virtualizer<HTMLElement, Element>;
+  size?: number;
+};
