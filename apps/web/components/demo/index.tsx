@@ -23,13 +23,15 @@ export const Demo = () => {
             }
           })
         }
-      : {
-          columns: 'auto',
-          size: {
-            width: controls.size.enabled ? controls.size.width : 0,
-            height: controls.size.enabled ? controls.size.height : 0
+      : controls.size.enabled
+        ? {
+            columns: 'auto',
+            size: {
+              width: controls.size.width,
+              height: controls.size.height
+            }
           }
-        }),
+        : {}),
     padding: controls.padding,
     gap: controls.gap
   });
