@@ -1,8 +1,8 @@
 ## @virtual-grid/react
 
-Virtualized grid powered by [@tanstack/virtual](https://tanstack.com/virtual/v3)
+Simplified virtualization using [@tanstack/virtual](https://tanstack.com/virtual/v3)
 
-[Demo](https://www.virtual-grid.com/) - [Docs](https://docs.virtual-grid.com/getting-started/react)
+[Demo](https://www.virtual-grid.com/) - [Docs](https://docs.virtual-grid.com/getting-started/react) - [Examples](https://github.com/niikeec/virtual-grid/examples/react)
 
 ## Installation
 
@@ -23,8 +23,7 @@ const App = () => {
 
   const grid = useGrid({
     scrollRef: ref,
-    count: 1000,
-    size: 120
+    count: 1000
     // ...
   });
 
@@ -35,8 +34,6 @@ const App = () => {
   );
 };
 ```
-
-For a headless solution check out the example in the [docs](https://docs.virtual-grid.com/getting-started/react).
 
 ## License
 
