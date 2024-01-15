@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@tanstack/react-virtual": "3.0.1",
+    "@tanstack/react-virtual": "^3.0.1",
     "@virtual-grid/core": "^1.1.0",
     "@virtual-grid/shared": "^1.1.0",
     "react-intersection-observer": "^9.5.2",

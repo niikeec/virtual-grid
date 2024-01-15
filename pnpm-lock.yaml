@@ -385,7 +385,7 @@ importers:
   packages/react:
     dependencies:
       '@tanstack/react-virtual':
-        specifier: 3.0.1
+        specifier: ^3.0.1
         version: 3.0.1(react-dom@18.2.0)(react@18.2.0)
       '@virtual-grid/core':
         specifier: ^1.1.0
