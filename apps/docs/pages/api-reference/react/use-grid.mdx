@@ -9,8 +9,7 @@ const Page = () => {
 
   const grid = useGrid({
     scrollRef: ref,
-    count: 1000,
-    size: 120
+    count: 1000
     // ...
   });
 
@@ -20,22 +19,21 @@ const Page = () => {
 
 ## Configurations
 
-| Option            | Type                                                                                               | Required | Description                                                                                                         |
-| :---------------- | :------------------------------------------------------------------------------------------------- | :------- | ------------------------------------------------------------------------------------------------------------------- |
-| scrollRef         | `RefObject<Element>`                                                                               | Yes      | Reference to the scrollable element                                                                                 |
-| count             | number                                                                                             | Yes      | Number of items to render                                                                                           |
-| totalCount        | number                                                                                             | No       | Total number of items to render. Can be used to achieve a seamless scroll behaviour when combined with `onLoadMore` |
-| size              | number \| `{width: number, height: number}`                                                        | No / Yes | Size of grid items                                                                                                  |
-| columns           | number \| "auto"                                                                                   | No       | Number of columns to render                                                                                         |
-| rows              | number                                                                                             | No       | Number of rows to render <br /> **Only applies when `horizontal` is `true`**                                        |
-| width             | number                                                                                             | No       | Width of the grid container                                                                                         |
-| padding           | number \| `{x?: number, y?: number, top?: number, bottom?: number, left?: number, right?: number}` | No       | Grid padding                                                                                                        |
-| gap               | number \| `{x?: number, y?: number}`                                                               | No       | Grid gap                                                                                                            |
-| invert            | boolean                                                                                            | No       | Invert items in grid                                                                                                |
-| horizontal        | boolean                                                                                            | No       | Horizontal mode places items in rows from top to bottom. `onLoadMore` area is placed on the x-axis                  |
-| getItemId         | function                                                                                           | No       | Callback for grid item id                                                                                           |
-| getItemData       | function                                                                                           | No       | Callback for grid item data                                                                                         |
-| rowVirtualizer    | VirtualizerOptions                                                                                 | No       | Row virtualizer options                                                                                             |
-| columnVirtualizer | VirtualizerOptions                                                                                 | No       | Column virtualizer options                                                                                          |
-| onLoadMore        | function                                                                                           | No       | Renders an area which triggers the callback when scrolled into view                                                 |
-| loadMoreSize      | number                                                                                             | No       | Set the size of the load more area                                                                                  |
+| Option       | Type                                                                                               | Required | Description                                                                                                         |
+| :----------- | :------------------------------------------------------------------------------------------------- | :------- | ------------------------------------------------------------------------------------------------------------------- |
+| scrollRef    | `RefObject<HTMLElement>`                                                                           | Yes      | Reference to the scrollable element                                                                                 |
+| count        | number                                                                                             | Yes      | Number of items to render                                                                                           |
+| totalCount   | number                                                                                             | No       | Total number of items to render. Can be used to achieve a seamless scroll behaviour when combined with `onLoadMore` |
+| size         | number \| `{width: number, height: number}`                                                        | No / Yes | Size of grid items                                                                                                  |
+| columns      | number \| "auto"                                                                                   | No       | Number of columns to render                                                                                         |
+| rows         | number                                                                                             | No       | Number of rows to render                                                                                            |
+| width        | number                                                                                             | No       | Width of the grid container                                                                                         |
+| hegiht       | number                                                                                             | No       | Height of the grid container                                                                                        |
+| padding      | number \| `{x?: number, y?: number, top?: number, bottom?: number, left?: number, right?: number}` | No       | Grid padding                                                                                                        |
+| gap          | number \| `{x?: number, y?: number}`                                                               | No       | Grid gap                                                                                                            |
+| invert       | boolean                                                                                            | No       | Invert items in grid                                                                                                |
+| horizontal   | boolean                                                                                            | No       | Horizontal mode places items in rows from top to bottom. `onLoadMore` trigger is placed on the x-axis               |
+| getItemId    | function                                                                                           | No       | Callback for grid item id                                                                                           |
+| getItemData  | function                                                                                           | No       | Callback for grid item data                                                                                         |
+| onLoadMore   | function                                                                                           | No       | Renders an area which triggers the callback when scrolled into view                                                 |
+| loadMoreSize | number                                                                                             | No       | Set the size of the load more trigger                                                                               |
