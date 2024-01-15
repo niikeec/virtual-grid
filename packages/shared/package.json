@@ -2,7 +2,6 @@
   "name": "@virtual-grid/shared",
   "version": "2.0.0",
   "license": "MIT",
-  "private": true,
   "exports": {
     "./package.json": "./package.json",
     ".": {
