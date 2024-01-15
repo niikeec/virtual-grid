@@ -388,10 +388,10 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(react-dom@18.2.0)(react@18.2.0)
       '@virtual-grid/core':
-        specifier: ^1.1.0
+        specifier: ^2.0.0
         version: link:../core
       '@virtual-grid/shared':
-        specifier: ^1.1.0
+        specifier: ^2.0.0
         version: link:../shared
       react-intersection-observer:
         specifier: ^9.5.2
@@ -443,7 +443,7 @@ importers:
         specifier: ^20.8.9
         version: 20.8.9
       '@virtual-grid/core':
-        specifier: ^1.1.0
+        specifier: ^2.0.0
         version: link:../core
       '@virtual-grid/eslint-config':
         specifier: workspace:*

@@ -1,4 +1,4 @@
-# @virtual-grid/react
+# @virtual-grid/shared
 
 ## 2.0.0
 
@@ -62,45 +62,3 @@
   - SolidJS integration. We got an active PR [here](https://github.com/niikeec/virtual-grid/pull/7).
 
   [PR](https://github.com/niikeec/virtual-grid/pull/6) - [Documentation](https://docs.virtual-grid.com/getting-started/react)
-
-### Patch Changes
-
-- Updated dependencies [6002f32]
-  - @virtual-grid/shared@2.0.0
-  - @virtual-grid/core@2.0.0
-
-## 1.1.0
-
-### Minor Changes
-
-- Grid horizontal support
-
-### Patch Changes
-
-- Updated dependencies
-  - @virtual-grid/core@1.1.0
-
-## 1.0.2
-
-### Patch Changes
-
-- Fix grid offset & load more trigger height
-- Updated dependencies
-  - @virtual-grid/core@1.0.1
-
-## 1.0.1
-
-### Patch Changes
-
-- Render improvement of grid items and load more trigger
-
-## 1.0.0
-
-### Major Changes
-
-- 9ab06ae: release
-
-### Patch Changes
-
-- Updated dependencies [9ab06ae]
-  - @virtual-grid/core@1.0.0
