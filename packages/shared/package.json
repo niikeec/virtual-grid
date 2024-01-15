@@ -1,0 +1,47 @@
+{
+  "name": "@virtual-grid/shared",
+  "version": "1.1.0",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tanstack/virtual-core": "3.0.0",
+    "@types/node": "^20.8.9",
+    "@virtual-grid/core": "^1.1.0",
+    "@virtual-grid/eslint-config": "workspace:*",
+    "@virtual-grid/tsconfig": "workspace:*",
+    "@virtual-grid/tsup-config": "workspace:*",
+    "tsup": "7.2.0",
+    "typescript": "^4.5.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://www.virtual-grid.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niikeec/virtual-grid.git"
+  },
+  "keywords": [
+    "virtual",
+    "grid"
+  ]
+}

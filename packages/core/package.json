@@ -17,7 +17,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "rm -rf .turbo node_modules dist",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },

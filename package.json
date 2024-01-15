@@ -12,6 +12,7 @@
     "dev": "turbo run dev",
     "dev:apps": "turbo run dev --filter \"./apps/*\"",
     "dev:packages": "turbo run dev --filter \"./packages/*\"",
+    "dev:react": "turbo run dev --filter=\"./packages/*\" --filter=\"!./packages/solid\" --filter=\"!./packages/vue\" --filter=\"./examples/react/*\"",
     "clean": "turbo run clean && rm -rf node_modules",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
@@ -25,7 +26,7 @@
     "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
-    "turbo": "latest",
+    "turbo": "^1.11.2",
     "typescript": "^4.5.2"
   }
 }

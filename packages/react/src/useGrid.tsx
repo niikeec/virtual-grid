@@ -1,111 +1,146 @@
-import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
-import { type useVirtualizer } from '@tanstack/react-virtual';
+import React from 'react';
+import { Virtualizer } from '@tanstack/react-virtual';
+import { useDeepCompareMemo } from 'use-deep-compare';
 import useResizeObserver from 'use-resize-observer';
 
 import * as Core from '@virtual-grid/core';
+import {
+  getColumnVirtualizerOptions,
+  getLoadMoreTriggerHeight,
+  getLoadMoreTriggerWidth,
+  getRowVirtualizerOptions,
+  getVirtualItemIndex,
+  GetVirtualItemProps,
+  getVirtualItemStyle,
+  GridProps,
+  observeGridSize,
+  PartialVirtualizerOptions
+} from '@virtual-grid/shared';
 
-type VirtualizerOptions = Parameters<typeof useVirtualizer>[0];
+import { LoadMoreTriggerProps } from './components';
 
-export type UseGridProps<IdT extends Core.GridItemId, DataT extends Core.GridItemData> = (
-  | Core.BaseGridProps<IdT, DataT>
-  | Core.AutoColumnsGridProps<IdT, DataT>
-  | Core.HorizontalGridProps<IdT, DataT>
-) & {
-  /**
-   * Reference to scrollable element.
-   */
-  scrollRef: RefObject<Element>;
-  /**
-   * Row virtualizer options.
-   */
-  rowVirtualizer?: Partial<VirtualizerOptions>;
-  /**
-   * Column virtualizer options.
-   */
-  columnVirtualizer?: Partial<VirtualizerOptions>;
-  /**
-   * Renders an area which triggers `onLoadMore` when scrolled into view.
-   */
-  onLoadMore?: () => void;
-  /**
-   * Set the size of the load more area.
-   */
-  loadMoreSize?: number;
-  /**
-   * The number of items to render beyond the visible area.
-   */
-  overscan?: number;
-};
+export type UseGridProps<
+  IdT extends Core.GridItemId = Core.GridItemId,
+  DataT extends Core.GridItemData = Core.GridItemData
+> = GridProps<IdT, DataT> & { scrollRef: React.RefObject<HTMLElement> };
 
-export const useGrid = <IdT extends Core.GridItemId, DataT extends Core.GridItemData>({
-  scrollRef,
-  overscan,
-  ...props
-}: UseGridProps<IdT, DataT>) => {
-  const [width, setWidth] = useState(0);
+export const useGrid = <
+  IdT extends Core.GridItemId,
+  DataT extends Core.GridItemData
+>(
+  props: UseGridProps<IdT, DataT>
+) => {
+  const { scrollRef, overscan, onLoadMore, loadMoreSize, ...options } = props;
+  const { getItemId, getItemData, invert, ...measureOptions } = options;
 
-  const staticWidth = useRef<number | null>(null);
+  const [width, setWidth] = React.useState(0);
+  const [height, setHeight] = React.useState(0);
 
-  const grid = Core.grid({ width, ...props });
+  // Initialize grid instance
+  const [{ setOptions, measure, ...grid }] = React.useState(
+    () => new Core.Grid({ width, height, ...options })
+  );
 
-  const rowVirtualizer: VirtualizerOptions = {
-    ...props.rowVirtualizer,
-    count: grid.totalRowCount,
-    getScrollElement: () => scrollRef.current,
-    estimateSize: grid.getItemHeight,
-    paddingStart: grid.padding.top,
-    paddingEnd: grid.padding.bottom,
-    overscan: overscan ?? props.rowVirtualizer?.overscan
-  };
+  // Update grid options
+  setOptions({ width, height, ...options });
 
-  const columnVirtualizer: VirtualizerOptions = {
-    ...props.columnVirtualizer,
-    horizontal: true,
-    count: grid.totalColumnCount,
-    getScrollElement: () => scrollRef.current,
-    estimateSize: grid.getItemWidth,
-    paddingStart: grid.padding.left,
-    paddingEnd: grid.padding.right,
-    overscan: overscan ?? props.columnVirtualizer?.overscan
-  };
+  // Measure grid when options that require a measure change
+  useDeepCompareMemo(measure, [measure, measureOptions, width, height]);
 
-  const isStatic = useCallback(() => {
-    return (
-      props.width !== undefined ||
-      props.horizontal ||
-      props.columns === 0 ||
-      (props.columns === 'auto'
-        ? !props.size || (typeof props.size === 'object' && !props.size.width)
-        : (props.columns === undefined || props.columns) &&
-          ((typeof props.size === 'object' && props.size.width) || typeof props.size === 'number'))
-    );
-  }, [props.columns, props.horizontal, props.size, props.width]);
+  // Check if grid size should be observed
+  const observeGrid = observeGridSize(props);
 
+  // Observe grid
   useResizeObserver({
-    ref: scrollRef,
-    onResize: ({ width }) => {
-      if (width === undefined || isStatic()) {
-        if (width !== undefined) staticWidth.current = width;
-        return;
-      }
-      setWidth(width);
+    ref: observeGrid ? scrollRef : undefined,
+    round: React.useCallback((val: number) => val, []),
+    onResize: ({ width, height }) => {
+      width !== undefined && setWidth(width);
+      height !== undefined && setHeight(height);
     }
   });
 
-  useEffect(() => {
-    if (staticWidth.current === null || width === staticWidth.current || isStatic()) return;
-    setWidth(staticWidth.current);
-    staticWidth.current = null;
-  }, [isStatic, width]);
+  // Measure grid before resize observer
+  React.useLayoutEffect(() => {
+    const node = scrollRef.current;
+    if (!node || !observeGrid) return;
+
+    const { width, height } = node.getBoundingClientRect();
+
+    const {
+      borderLeftWidth,
+      borderRightWidth,
+      borderTopWidth,
+      borderBottomWidth
+    } = getComputedStyle(node);
+
+    const borderX = parseFloat(borderLeftWidth) + parseFloat(borderRightWidth);
+    const borderY = parseFloat(borderTopWidth) + parseFloat(borderBottomWidth);
+
+    // Remove border from width/height so we have the un-rounded client width/height
+    setWidth(width - borderX);
+    setHeight(height - borderY);
+  }, [scrollRef, observeGrid]);
+
+  const rowVirtualizer = {
+    ...getRowVirtualizerOptions(grid),
+    getScrollElement: () => scrollRef.current,
+    overscan: overscan
+  } satisfies PartialVirtualizerOptions;
+
+  const columnVirtualizer = {
+    ...getColumnVirtualizerOptions(grid),
+    getScrollElement: () => scrollRef.current,
+    overscan: overscan
+  } satisfies PartialVirtualizerOptions;
+
+  const getVirtualItem = (props: GetVirtualItemProps) => {
+    const index = getVirtualItemIndex(grid, props);
+    if (!grid.isIndexValid(index)) return;
+
+    const { size, padding, translate } = getVirtualItemStyle(grid, props);
+
+    const style = {
+      position: 'absolute',
+      top: '0px',
+      left: '0px',
+      width: size.width !== undefined ? `${size.width}px` : '100%',
+      height: size.height !== undefined ? `${size.height}px` : '100%',
+      transform: `translateX(${translate.x}px) translateY(${translate.y}px)`,
+      paddingLeft: `${padding.left}px`,
+      paddingRight: `${padding.right}px`,
+      paddingTop: `${padding.top}px`,
+      paddingBottom: `${padding.bottom}px`,
+      boxSizing: 'border-box'
+    } satisfies React.CSSProperties;
+
+    return { index, style };
+  };
+
+  const getLoadMoreTrigger = ({
+    virtualizer
+  }: {
+    virtualizer?: Virtualizer<HTMLElement, Element>;
+  } = {}) => {
+    const position = grid.options.horizontal ? 'right' : 'bottom';
+
+    const getSize = grid.options.horizontal
+      ? getLoadMoreTriggerWidth
+      : getLoadMoreTriggerHeight;
+
+    const size = virtualizer
+      ? getSize({ ...grid, virtualizer, size: loadMoreSize })
+      : loadMoreSize;
+
+    return { position, size, onLoadMore } satisfies LoadMoreTriggerProps;
+  };
 
   return {
     ...grid,
-    scrollRef: scrollRef,
-    onLoadMore: props.onLoadMore,
-    loadMoreSize: props.loadMoreSize,
-    virtualizer: {
-      rowVirtualizer: rowVirtualizer,
-      columnVirtualizer: columnVirtualizer
-    }
+    scrollRef,
+    rowVirtualizer,
+    columnVirtualizer,
+    getVirtualItem,
+    getLoadMoreTrigger
   };
 };

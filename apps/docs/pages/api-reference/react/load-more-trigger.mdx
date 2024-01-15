@@ -1,0 +1,33 @@
+## LoadMoreTrigger
+
+This component renders the `onLoadMore` trigger area. **Should be only used headlessly**.
+
+```tsx copy
+import * as React from 'react';
+import { Grid, useGrid } from '@virtual-grid/react';
+
+const Page = () => {
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  const grid = useGrid({
+    scrollRef: ref,
+    count: 1000
+    // ...
+  });
+
+  return (
+    <div ref={ref} style={{ height: '400px', overflow: 'auto' }}>
+      // ...
+      <LoadMoreTrigger {...grid.getLoadMoreTrigger()} />
+    </div>
+  );
+};
+```
+
+| Option     | Type                                     | Required | Description                                           |
+| :--------- | :--------------------------------------- | :------- | ----------------------------------------------------- |
+| position   | `'top' \| 'bottom' \| 'left' \| 'right'` | No       | **Default = 'bottom'** <br /> Position of the trigger |
+| size       | number                                   | No       | **Default = 0** <br /> Size of the trigger            |
+| onLoadMore | function                                 | No       | Callback function when the trigger is visible         |
+| style      | CSSProperties                            | No       | Apply custom styles                                   |
+| className  | string                                   | No       | Apply custom classes                                  |

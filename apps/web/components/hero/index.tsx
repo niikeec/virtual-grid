@@ -11,7 +11,7 @@ export const Hero = () => {
       <div className="flex flex-col items-center">
         <h1 className="mt-3 text-4xl font-bold">Virtual Grid</h1>
         <p className="text-muted-foreground mt-2">
-          Virtualized grid powered by{' '}
+          Simplified virtualization using{' '}
           <a
             href="https://tanstack.com/virtual/v3"
             target="_blank"
@@ -33,7 +33,10 @@ export const Hero = () => {
           <a
             href="https://docs.virtual-grid.com/getting-started/react"
             target="_blank"
-            className={buttonVariants({ variant: 'outline', className: 'w-[150px] font-normal' })}
+            className={buttonVariants({
+              variant: 'outline',
+              className: 'w-[150px] font-normal'
+            })}
           >
             <Book weight="bold" className="mr-2 shrink-0" />
             Documentation

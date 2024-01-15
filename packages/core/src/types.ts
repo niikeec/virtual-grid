@@ -11,7 +11,15 @@ export type GridPadding = {
   right?: number;
 };
 
-export type GridItem<IdT extends GridItemId = number, DataT extends GridItemData = undefined> = {
+export type GridGap = {
+  x?: number;
+  y?: number;
+};
+
+export type GridItem<
+  IdT extends GridItemId = number,
+  DataT extends GridItemData = undefined
+> = {
   index: number;
   id: IdT;
   row: number;

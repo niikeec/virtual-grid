@@ -1,3 +1,4 @@
 export { useVirtualizer } from '@tanstack/react-virtual';
-export * from './component';
+export * from './components';
 export * from './useGrid';
+export * from './useScrollMargin';

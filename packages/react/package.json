@@ -17,14 +17,16 @@
   "scripts": {
     "build": "tsup",
     "dev": "wait-on ../core/dist/index.mjs && tsup --watch",
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "rm -rf .turbo node_modules dist",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@tanstack/react-virtual": "3.0.0-beta.66",
+    "@tanstack/react-virtual": "^3.0.1",
     "@virtual-grid/core": "^1.1.0",
+    "@virtual-grid/shared": "^1.1.0",
     "react-intersection-observer": "^9.5.2",
+    "use-deep-compare": "^1.2.1",
     "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
@@ -53,6 +55,7 @@
   "keywords": [
     "react",
     "virtual",
-    "grid"
+    "grid",
+    "tanstack"
   ]
 }
