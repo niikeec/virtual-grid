@@ -1,5 +1,11 @@
 # @virtual-grid/react
 
+## 2.0.1
+
+### Patch Changes
+
+- 62cfcf9: Fix passing width and height props as undefined, which would previously override internal sizes.
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,12 @@
 # scroll-margin
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [62cfcf9]
+  - @virtual-grid/react@2.0.1
+
 ## 0.0.1
 
 ### Patch Changes
