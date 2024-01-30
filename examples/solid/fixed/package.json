@@ -12,8 +12,8 @@
   "dependencies": {
     "@solid-primitives/resize-observer": "^2.0.22",
     "@tanstack/solid-virtual": "3.0.1",
-    "@virtual-grid/core": "workspace:^1.1.0",
-    "@virtual-grid/shared": "workspace:^",
+    "@virtual-grid/core": "workspace:*",
+    "@virtual-grid/shared": "workspace:*",
     "@virtual-grid/solid": "workspace:*",
     "solid-js": "^1.8.5"
   },
