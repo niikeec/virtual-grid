@@ -1,1 +1,5 @@
-{ "use-grid": "useGrid", "grid": "Grid" }
+{
+  "use-grid": "useGrid",
+  "grid": "Grid",
+  "load-more-trigger": "LoadMoreTrigger"
+}

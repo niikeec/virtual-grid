@@ -108,11 +108,13 @@ export class Grid<
 
   rowCount = 0;
   columnCount = 0;
+
   totalRowCount = 0;
   totalColumnCount = 0;
 
   itemWidth: number | undefined = undefined;
   itemHeight: number | undefined = undefined;
+
   virtualItemWidth = 0;
   virtualItemHeight = 0;
 
@@ -131,8 +133,12 @@ export class Grid<
       : this.options.padding;
   };
 
-  private getRowCount = (count: number) => {
-    return (this.columnCount && Math.ceil(count / this.columnCount)) || 0;
+  private getRowCount = (count: number, columns: number) => {
+    return (columns && Math.ceil(count / columns)) || 0;
+  };
+
+  private getColumnCount = (count: number, rows: number) => {
+    return (rows && Math.ceil(count / rows)) || 0;
   };
 
   private isPositiveInt = (value: number) => {
@@ -190,12 +196,12 @@ export class Grid<
 
     this.totalCount = !totalCount ? count : Math.max(count, totalCount);
 
-    const rows = options.rows ?? 1;
-    if (!this.isPositiveInt(rows)) {
+    const rows = options.rows;
+    if (typeof rows === 'number' && !this.isPositiveInt(rows)) {
       throw new Error(`Invalid option rows -> ${rows}`);
     }
 
-    const columns = options.columns ?? 1;
+    const columns = options.columns;
     if (typeof columns === 'number' && !this.isPositiveInt(columns)) {
       throw new Error(`Invalid option columns -> ${columns}`);
     }
@@ -209,11 +215,13 @@ export class Grid<
       : undefined;
 
     // Column count
-    if (this.options.horizontal) {
-      this.columnCount = Math.round(count / rows);
-    } else if (columns !== 'auto') {
-      this.columnCount = columns;
-    } else if (gridWidth) {
+    if (typeof columns === 'number' || (!columns && !this.options.horizontal)) {
+      this.columnCount = columns ?? 1;
+      this.totalColumnCount = columns ?? 1;
+    } else if (this.options.horizontal) {
+      this.columnCount = this.getColumnCount(count, rows ?? 1);
+      this.totalColumnCount = this.getColumnCount(this.totalCount, rows ?? 1);
+    } else if (columns === 'auto' && gridWidth) {
       if (!this.itemWidth || !this.isPositiveInt(this.itemWidth)) {
         throw new Error(`Invalid option itemWidth -> ${this.itemWidth}`);
       }
@@ -224,25 +232,17 @@ export class Grid<
         const space = gridWidth - (this.columnCount - 1) * this.gap.x;
         this.columnCount = Math.floor(space / this.itemWidth);
       }
-    }
 
-    // Total column count
-    if (this.options.horizontal && rows) {
-      this.totalColumnCount = Math.round(this.totalCount / rows);
-    } else {
       this.totalColumnCount = this.columnCount;
     }
 
-    // Row & total row count
-    if (this.options.rows !== undefined) {
-      this.rowCount = this.options.rows;
-      this.totalRowCount = this.options.rows;
-    } else if (this.options.horizontal) {
-      this.rowCount = rows;
-      this.totalRowCount = rows;
-    } else {
-      this.rowCount = this.getRowCount(count);
-      this.totalRowCount = this.getRowCount(this.totalCount);
+    // Row count
+    if (rows !== undefined || this.options.horizontal) {
+      this.rowCount = rows ?? 1;
+      this.totalRowCount = rows ?? 1;
+    } else if (!this.options.horizontal) {
+      this.rowCount = this.getRowCount(count, this.columnCount);
+      this.totalRowCount = this.getRowCount(this.totalCount, this.columnCount);
     }
 
     // Virtual item width

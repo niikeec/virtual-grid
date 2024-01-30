@@ -1,8 +1,7 @@
-import { Virtualizer } from '@tanstack/virtual-core';
-
 import * as Core from '@virtual-grid/core';
 
 import {
+  GetLoadMoreTriggerProps,
   GetVirtualItemProps,
   GridProps,
   PartialVirtualizerOptions
@@ -132,16 +131,8 @@ export const getVirtualItemStyle = (
   return { size, padding, translate };
 };
 
-type GetLoadMoreTriggerHeightProps = Pick<
-  Core.Grid,
-  'rowCount' | 'totalRowCount' | 'columnCount' | 'getItemRect'
-> & {
-  virtualizer: Virtualizer<HTMLElement, Element>;
-  size?: number;
-};
-
 export const getLoadMoreTriggerHeight = (
-  props: GetLoadMoreTriggerHeightProps
+  props: GetLoadMoreTriggerProps & Pick<Core.Grid, 'totalRowCount'>
 ) => {
   if (props.totalRowCount === props.rowCount) return props.size;
 
@@ -158,16 +149,8 @@ export const getLoadMoreTriggerHeight = (
   return Math.min(virtualizerHeight, triggerHeight);
 };
 
-type GetLoadMoreTriggerWidthProps = Pick<
-  Core.Grid,
-  'columnCount' | 'totalColumnCount' | 'rowCount' | 'getItemRect'
-> & {
-  virtualizer: Virtualizer<HTMLElement, Element>;
-  size?: number;
-};
-
 export const getLoadMoreTriggerWidth = (
-  props: GetLoadMoreTriggerWidthProps
+  props: GetLoadMoreTriggerProps & Pick<Core.Grid, 'totalColumnCount'>
 ) => {
   if (props.totalColumnCount === props.columnCount) return props.size;
 

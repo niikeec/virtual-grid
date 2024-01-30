@@ -16,7 +16,7 @@ export const LoadMoreTrigger = ({
 }: LoadMoreTriggerProps) => {
   const vertical = position === 'top' || position === 'bottom';
 
-  const { ref: loadMoreRef, inView } = useInView();
+  const { ref, inView } = useInView();
 
   React.useEffect(() => {
     inView && onLoadMore?.();
@@ -24,7 +24,7 @@ export const LoadMoreTrigger = ({
 
   return (
     <div
-      ref={loadMoreRef}
+      ref={ref}
       className={props.className}
       style={{
         position: 'absolute',

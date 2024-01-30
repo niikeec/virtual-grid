@@ -13,7 +13,6 @@
     "dev:apps": "turbo run dev --filter \"./apps/*\"",
     "dev:packages": "turbo run dev --filter \"./packages/*\"",
     "dev:react": "turbo run dev --filter=\"./packages/*\" --filter=\"!./packages/solid\" --filter=\"!./packages/vue\" --filter=\"./examples/react/*\"",
-    "dev:solid": "turbo run dev --filter=\"./packages/*\" --filter=\"!./packages/react\" --filter=\"!./packages/vue\" --filter=\"./examples/solid/*\"",
     "clean": "turbo run clean && rm -rf node_modules",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

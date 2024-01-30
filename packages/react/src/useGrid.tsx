@@ -33,16 +33,19 @@ export const useGrid = <
   const { scrollRef, overscan, onLoadMore, loadMoreSize, ...options } = props;
   const { getItemId, getItemData, invert, ...measureOptions } = options;
 
-  const [width, setWidth] = React.useState(0);
-  const [height, setHeight] = React.useState(0);
+  const [gridWidth, setGridWidth] = React.useState(0);
+  const [gridHeight, setGridHeight] = React.useState(0);
+
+  const width = options.width ?? gridWidth;
+  const height = options.height ?? gridHeight;
 
   // Initialize grid instance
   const [{ setOptions, measure, ...grid }] = React.useState(
-    () => new Core.Grid({ width, height, ...options })
+    () => new Core.Grid({ ...options, width, height })
   );
 
   // Update grid options
-  setOptions({ width, height, ...options });
+  setOptions({ ...options, width, height });
 
   // Measure grid when options that require a measure change
   useDeepCompareMemo(measure, [measure, measureOptions, width, height]);
@@ -55,8 +58,8 @@ export const useGrid = <
     ref: observeGrid ? scrollRef : undefined,
     round: React.useCallback((val: number) => val, []),
     onResize: ({ width, height }) => {
-      width !== undefined && setWidth(width);
-      height !== undefined && setHeight(height);
+      width !== undefined && setGridWidth(width);
+      height !== undefined && setGridHeight(height);
     }
   });
 
@@ -78,8 +81,8 @@ export const useGrid = <
     const borderY = parseFloat(borderTopWidth) + parseFloat(borderBottomWidth);
 
     // Remove border from width/height so we have the un-rounded client width/height
-    setWidth(width - borderX);
-    setHeight(height - borderY);
+    setGridWidth(width - borderX);
+    setGridHeight(height - borderY);
   }, [scrollRef, observeGrid]);
 
   const rowVirtualizer = {
@@ -138,11 +141,9 @@ export const useGrid = <
   return {
     ...grid,
     scrollRef,
-    onLoadMore,
-    loadMoreSize,
-    getVirtualItem,
     rowVirtualizer,
     columnVirtualizer,
+    getVirtualItem,
     getLoadMoreTrigger
   };
 };

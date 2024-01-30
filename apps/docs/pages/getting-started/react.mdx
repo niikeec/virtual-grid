@@ -1,4 +1,4 @@
-import { Card, Cards, Steps, Tab, Tabs } from 'nextra-theme-docs';
+import { Steps, Tabs } from 'nextra-theme-docs';
 
 # React Setup
 
@@ -22,8 +22,7 @@ npm install @virtual-grid/react
 
       const grid = useGrid({
         scrollRef: ref,
-    	count: 1000,
-    	size: 120
+    	count: 1000
     	// ...
       });
 
@@ -47,24 +46,20 @@ npm install @virtual-grid/react
       const grid = useGrid({
         scrollRef: ref,
         count: 1000,
-        size: 120
+        columns: 3
         // ...
       });
 
-      const rowVirtualizer = useVirtualizer(grid.virtualizer.rowVirtualizer);
-      const columnVirtualizer = useVirtualizer(grid.virtualizer.columnVirtualizer);
+      const rowVirtualizer = useVirtualizer(grid.rowVirtualizer);
+      const columnVirtualizer = useVirtualizer(grid.columnVirtualizer);
 
-      const virtualRows = rowVirtualizer.getVirtualItems();
-      const virtualColumns = columnVirtualizer.getVirtualItems();
+      React.useEffect(() => {
+        rowVirtualizer.measure();
+      }, [rowVirtualizer, grid.virtualItemHeight]);
 
-      // Uncomment if grid is not static
-      // React.useEffect(() => {
-      //   rowVirtualizer.measure();
-      // }, [rowVirtualizer, grid.virtualItemSize.height]);
-
-      // React.useEffect(() => {
-      //   columnVirtualizer.measure();
-      // }, [columnVirtualizer, grid.virtualItemSize.width]);
+      React.useEffect(() => {
+        columnVirtualizer.measure();
+      }, [columnVirtualizer, grid.virtualItemWidth]);
 
       return (
         <div ref={ref} style={{ height: '400px', overflow: 'auto' }}>
@@ -75,35 +70,19 @@ npm install @virtual-grid/react
               width: `${columnVirtualizer.getTotalSize()}px`
             }}
           >
-            {virtualRows.map((virtualRow) => (
-              <React.Fragment key={virtualRow.index}>
-                {virtualColumns.map((virtualColumn) => {
-                  // const index = virtualRow.index * grid.columnCount + virtualColumn.index;
-                  // if (index >= grid.count) return null;
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => (
+              <React.Fragment key={virtualRow.key}>
+                {columnVirtualizer.getVirtualItems().map((virtualColumn) => {
+                  const item = grid.getVirtualItem({
+                    row: virtualRow,
+                    column: virtualColumn
+                  });
+
+                  if (!item) return null;
 
                   return (
-                    <div
-                      key={virtualColumn.index}
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: `${virtualColumn.size}px`,
-                        height: `${virtualRow.size}px`,
-                        transform: `translateX(${virtualColumn.start}px) translateY(${virtualRow.start}px)`,
-                        paddingLeft: virtualColumn.index !== 0 ? grid.gap.x : 0,
-                        paddingTop: virtualRow.index !== 0 ? grid.gap.y : 0
-                      }}
-                    >
-                      <div
-                        style={{
-                          margin: 'auto',
-                          width: grid.itemSize.width ?? '100%',
-                          height: grid.itemSize.height ?? '100%'
-                        }}
-                      >
-                        ...
-                      </div>
+                    <div key={virtualColumn.key} style={item.style}>
+                      ...
                     </div>
                   );
                 })}
