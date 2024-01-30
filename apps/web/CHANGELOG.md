@@ -1,5 +1,12 @@
 # web
 
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies [62cfcf9]
+  - @virtual-grid/react@2.0.1
+
 ## 1.0.4
 
 ### Patch Changes
