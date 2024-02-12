@@ -1,5 +1,12 @@
 # react-fixed
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [3473540]
+  - @virtual-grid/react@2.0.2
+
 ## 0.0.2
 
 ### Patch Changes
