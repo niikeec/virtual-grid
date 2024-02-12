@@ -1,5 +1,14 @@
 # @virtual-grid/react
 
+## 2.0.2
+
+### Patch Changes
+
+- 3473540: Make totalCount public
+- Updated dependencies [3473540]
+  - @virtual-grid/core@2.0.1
+  - @virtual-grid/shared@2.0.1
+
 ## 2.0.1
 
 ### Patch Changes

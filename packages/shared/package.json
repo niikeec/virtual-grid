@@ -1,6 +1,6 @@
 {
   "name": "@virtual-grid/shared",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "exports": {
     "./package.json": "./package.json",
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@tanstack/virtual-core": "3.0.0",
     "@types/node": "^20.8.9",
-    "@virtual-grid/core": "^2.0.0",
+    "@virtual-grid/core": "^2.0.1",
     "@virtual-grid/eslint-config": "workspace:*",
     "@virtual-grid/tsconfig": "workspace:*",
     "@virtual-grid/tsup-config": "workspace:*",

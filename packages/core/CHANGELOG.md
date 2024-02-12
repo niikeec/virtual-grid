@@ -1,5 +1,11 @@
 # @virtual-grid/core
 
+## 2.0.1
+
+### Patch Changes
+
+- 3473540: Make totalCount public
+
 ## 2.0.0
 
 ### Major Changes
