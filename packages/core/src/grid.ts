@@ -107,10 +107,9 @@ export class Grid<
   rowCount = 0;
   columnCount = 0;
 
+  totalCount = 0;
   totalRowCount = 0;
   totalColumnCount = 0;
-
-  totalCount = 0;
 
   itemWidth: number | undefined = undefined;
   itemHeight: number | undefined = undefined;
