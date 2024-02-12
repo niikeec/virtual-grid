@@ -102,13 +102,12 @@ export class Grid<
   IdT extends GridItemId = GridItemId,
   DataT extends GridItemData = GridItemData
 > {
-  private totalCount = 0;
-
   options: GridProps<IdT, DataT>;
 
   rowCount = 0;
   columnCount = 0;
 
+  totalCount = 0;
   totalRowCount = 0;
   totalColumnCount = 0;
 
