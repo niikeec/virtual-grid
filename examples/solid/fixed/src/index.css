@@ -1,0 +1,20 @@
+.list {
+  border: 1px solid gray;
+}
+
+.item-even,
+.item-odd {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-odd {
+  background-color: #eeece5;
+}
+
+.item-even {
+  background-color: #dedbd0;
+}
