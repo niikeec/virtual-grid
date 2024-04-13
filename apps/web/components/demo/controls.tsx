@@ -24,7 +24,8 @@ const schema = z.object({
     count: z.number().int()
   }),
   padding: z.number(),
-  gap: z.number()
+  gap: z.number(),
+  rtl: z.boolean()
 });
 
 type Controls = z.infer<typeof schema>;
@@ -34,7 +35,8 @@ export const defaults: Controls = {
   size: { enabled: false, width: 140, height: 140 },
   columns: { enabled: true, count: isMobile ? 3 : 5 },
   padding: 12,
-  gap: 8
+  gap: 8,
+  rtl: false
 };
 
 export const Controls = ({
@@ -233,9 +235,37 @@ export const Controls = ({
                             id="gap"
                             type="number"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                             onBlur={async () => {
                               field.onBlur();
+                              await handleSubmit();
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <Label htmlFor="rtl" className="flex-1">
+                    Rtl
+                  </Label>
+                  <FormField
+                    control={form.control}
+                    name="rtl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Checkbox
+                            id="rtl"
+                            {...field}
+                            defaultChecked={field.value}
+                            value={field.value?.toString()}
+                            onCheckedChange={async (checked) => {
+                              field.onChange(checked)
                               await handleSubmit();
                             }}
                           />
