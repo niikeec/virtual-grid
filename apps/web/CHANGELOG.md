@@ -1,5 +1,12 @@
 # web
 
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies [cd26778]
+  - @virtual-grid/react@2.0.3
+
 ## 1.0.6
 
 ### Patch Changes
