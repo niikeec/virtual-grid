@@ -1,5 +1,12 @@
 # infinite-scroll
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [cd26778]
+  - @virtual-grid/react@2.0.3
+
 ## 0.0.3
 
 ### Patch Changes
