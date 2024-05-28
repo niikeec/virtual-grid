@@ -33,6 +33,8 @@ export const useGrid = <
   const { scrollRef, overscan, onLoadMore, loadMoreSize, ...options } = props;
   const { getItemId, getItemData, invert, ...measureOptions } = options;
 
+  const rerender = React.useReducer(() => ({}), {})[1];
+
   const [gridWidth, setGridWidth] = React.useState(0);
   const [gridHeight, setGridHeight] = React.useState(0);
 
@@ -48,7 +50,10 @@ export const useGrid = <
   setOptions({ ...options, width, height });
 
   // Measure grid when options that require a measure change
-  useDeepCompareMemo(measure, [measure, measureOptions, width, height]);
+  useDeepCompareMemo(() => {
+    measure();
+    rerender();
+  }, [measure, rerender, measureOptions, width, height]);
 
   // Check if grid size should be observed
   const observeGrid = observeGridSize(props);
