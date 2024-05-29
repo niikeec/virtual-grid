@@ -58,6 +58,10 @@ export interface DefaultGridProps<
    */
   horizontal?: boolean;
   /**
+   * @default false
+   */
+  rtl?: boolean;
+  /**
    * Callback function for grid item `id` in `getItem` function.
    */
   getItemId?: (index: number) => IdT | undefined;
@@ -120,6 +124,8 @@ export class Grid<
   padding: Omit<GridPadding, 'x' | 'y'> = {};
   gap: GridGap = {};
 
+  rtl = false;
+
   constructor(props: GridProps<IdT, DataT>) {
     this.options = props;
     this.initOptions();
@@ -178,6 +184,8 @@ export class Grid<
 
     this.itemWidth = typeof size === 'object' ? size.width : size;
     this.itemHeight = typeof size === 'object' ? size.height : size;
+
+    this.rtl = !!this.options.rtl;
   };
 
   measure = () => {

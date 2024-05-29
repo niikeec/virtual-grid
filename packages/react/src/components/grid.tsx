@@ -37,6 +37,7 @@ export const Grid = ({ grid, children }: GridProps) => {
   return (
     <div
       ref={ref}
+      dir={grid.options.rtl ? 'rtl' : 'ltr'}
       style={{
         position: 'relative',
         width: `${columnVirtualizer.getTotalSize()}px`,
