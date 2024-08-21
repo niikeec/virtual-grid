@@ -5,10 +5,11 @@ import { useScrollMargin } from '../useScrollMargin';
 
 export interface GridProps {
   grid: ReturnType<typeof useGrid>;
+  className?: string;
   children: (index: number) => React.ReactNode;
 }
 
-export const Grid = ({ grid, children }: GridProps) => {
+export const Grid = ({ grid, children, className }: GridProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { scrollMargin } = useScrollMargin({
@@ -37,6 +38,7 @@ export const Grid = ({ grid, children }: GridProps) => {
   return (
     <div
       ref={ref}
+      className={className}
       style={{
         position: 'relative',
         width: `${columnVirtualizer.getTotalSize()}px`,
