@@ -20,7 +20,7 @@
     "publish-packages": "turbo run build lint typecheck --filter \"./packages/*\" && changeset version && changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
+    "@changesets/cli": "^2.27.8",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@virtual-grid/eslint-config": "workspace:*",
     "eslint": "^8.52.0",
