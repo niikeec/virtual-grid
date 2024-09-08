@@ -6,6 +6,6 @@
   "types": "index.d.ts",
   "devDependencies": {
     "@types/node": "20.8.9",
-    "tsup": "7.2.0"
+    "tsup": "8.2.4"
   }
 }

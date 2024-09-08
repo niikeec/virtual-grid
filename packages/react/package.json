@@ -37,7 +37,7 @@
     "@virtual-grid/tsconfig": "workspace:*",
     "@virtual-grid/tsup-config": "workspace:*",
     "react": "^18.2.0",
-    "tsup": "7.2.0",
+    "tsup": "8.2.4",
     "typescript": "^4.5.2",
     "wait-on": "^8.0.0"
   },
