@@ -19,14 +19,17 @@ export const getRowVirtualizerOptions = (
 };
 
 export const getColumnVirtualizerOptions = (
-  grid: Pick<Core.Grid, 'totalColumnCount' | 'getItemWidth' | 'padding'>
+  grid: Pick<
+    Core.Grid,
+    'totalColumnCount' | 'getItemWidth' | 'padding' | 'options'
+  >
 ) => {
   return {
     horizontal: true,
     count: grid.totalColumnCount,
     estimateSize: grid.getItemWidth,
-    paddingStart: grid.padding.left,
-    paddingEnd: grid.padding.right
+    paddingStart: grid.options.rtl ? grid.padding.right : grid.padding.left,
+    paddingEnd: grid.options.rtl ? grid.padding.left : grid.padding.right
   } satisfies PartialVirtualizerOptions;
 };
 
@@ -93,7 +96,10 @@ export const getVirtualItemIndex = (
 };
 
 export const getVirtualItemStyle = (
-  grid: Pick<Core.Grid, 'padding' | 'gap' | 'itemWidth' | 'itemHeight'>,
+  grid: Pick<
+    Core.Grid,
+    'padding' | 'gap' | 'itemWidth' | 'itemHeight' | 'options'
+  >,
   { row, column, scrollMargin }: GetVirtualItemProps
 ) => {
   const gap = {
@@ -117,14 +123,16 @@ export const getVirtualItemStyle = (
   };
 
   const padding = {
-    left: gridPadding.left + offsetPadding + gap.x,
-    right: gridPadding.right + offsetPadding,
+    left: gridPadding.left + offsetPadding + (!grid.options.rtl ? gap.x : 0),
+    right: gridPadding.right + offsetPadding + (grid.options.rtl ? gap.x : 0),
     top: gridPadding.top + gap.y,
     bottom: gridPadding.bottom
   };
 
   const translate = {
-    x: (column?.start ?? 0) - (scrollMargin?.left ?? 0),
+    x:
+      ((column?.start ?? 0) - (scrollMargin?.left ?? 0)) *
+      (grid.options.rtl ? -1 : 1),
     y: (row?.start ?? 0) - (scrollMargin?.top ?? 0)
   };
 
@@ -150,7 +158,8 @@ export const getLoadMoreTriggerHeight = (
 };
 
 export const getLoadMoreTriggerWidth = (
-  props: GetLoadMoreTriggerProps & Pick<Core.Grid, 'totalColumnCount'>
+  props: GetLoadMoreTriggerProps &
+    Pick<Core.Grid, 'totalColumnCount' | 'options'>
 ) => {
   if (props.totalColumnCount === props.columnCount) return props.size;
 
@@ -162,7 +171,10 @@ export const getLoadMoreTriggerWidth = (
 
   const virtualizerWidth = props.virtualizer.getTotalSize();
 
-  const triggerWidth = virtualizerWidth - rect.left + loadMoreWidth;
+  const triggerWidth =
+    virtualizerWidth -
+    (props.options.rtl ? rect.right : rect.left) +
+    loadMoreWidth;
 
   return Math.min(virtualizerWidth, triggerWidth);
 };

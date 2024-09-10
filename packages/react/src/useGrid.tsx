@@ -73,6 +73,8 @@ export const useGrid = <
     const node = scrollRef.current;
     if (!node || !observeGrid) return;
 
+    // NOTE: node.clientHeight & node.clientWidth hold the same value,
+    // plus, this wouldn't work for rotated elements
     const { width, height } = node.getBoundingClientRect();
 
     const {
@@ -111,7 +113,8 @@ export const useGrid = <
     const style = {
       position: 'absolute',
       top: '0px',
-      left: '0px',
+      left: !grid.rtl ? '0px' : 'auto',
+      right: grid.rtl ? '0px' : 'auto',
       width: size.width !== undefined ? `${size.width}px` : '100%',
       height: size.height !== undefined ? `${size.height}px` : '100%',
       transform: `translateX(${translate.x}px) translateY(${translate.y}px)`,
@@ -130,7 +133,11 @@ export const useGrid = <
   }: {
     virtualizer?: Virtualizer<HTMLElement, Element>;
   } = {}) => {
-    const position = grid.options.horizontal ? 'right' : 'bottom';
+    const position = grid.options.horizontal
+      ? grid.options.rtl
+        ? 'left'
+        : 'right'
+      : 'bottom';
 
     const getSize = grid.options.horizontal
       ? getLoadMoreTriggerWidth

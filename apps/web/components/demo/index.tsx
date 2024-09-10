@@ -33,20 +33,27 @@ export const Demo = () => {
           }
         : {}),
     padding: controls.padding,
-    gap: controls.gap
+    gap: controls.gap,
+    rtl: controls.rtl,
   });
 
   return (
     <Window>
       <Controls controls={controls} onChange={setControls} />
 
-      <div ref={ref} className="h-full overflow-auto">
+      <div
+        ref={ref}
+        className="h-full overflow-auto"
+        dir={controls.rtl ? 'rtl' : 'ltr'}
+      >
         <Grid grid={grid}>
           {(index) => (
             <div
               key={index}
-              className="border-border/80 bg-accent h-full w-full rounded-lg border"
-            />
+              className="border-border/80 bg-accent flex h-full w-full items-center justify-center rounded-lg border text-gray-500"
+            >
+              {index + 1}
+            </div>
           )}
         </Grid>
       </div>
