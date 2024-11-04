@@ -10,18 +10,18 @@ export const Hero = () => {
 
       <div className="flex flex-col items-center">
         <h1 className="mt-3 text-4xl font-bold">Virtual Grid</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-muted-foreground mt-2 text-center">
           Simplified virtualization using{' '}
           <a
             href="https://tanstack.com/virtual/v3"
             target="_blank"
-            className="text-primary hover:text-muted-foreground underline transition-colors"
+            className="text-primary hover:text-muted-foreground underline underline-offset-2 transition-colors"
           >
             @tanstack/virtual
           </a>
         </p>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-5 flex gap-3">
           <a
             href="https://github.com/niikeec/virtual-grid"
             target="_blank"

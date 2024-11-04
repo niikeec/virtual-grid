@@ -1,12 +1,21 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { Check } from '@phosphor-icons/react';
 import { CopyIcon } from '@radix-ui/react-icons';
 
 import { Button } from './button';
 
-export const CopyButton = ({ onClick, className, ...props }: HTMLAttributes<HTMLButtonElement>) => {
+export const CopyButton = ({
+  onClick,
+  className,
+  ...props
+}: HTMLAttributes<HTMLButtonElement>) => {
   const [copying, setCopying] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
@@ -20,6 +29,7 @@ export const CopyButton = ({ onClick, className, ...props }: HTMLAttributes<HTML
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            aria-label="Copy to clipboard"
             variant="outline"
             size="icon"
             onClick={(e) => {
