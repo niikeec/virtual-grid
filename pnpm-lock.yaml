@@ -75,9 +75,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@hookform/resolvers':
-        specifier: ^3.3.2
-        version: 3.3.4(react-hook-form@7.49.3)
       '@phosphor-icons/react':
         specifier: ^2.0.13
         version: 2.0.15(react-dom@18.2.0)(react@18.2.0)
@@ -135,9 +132,6 @@ importers:
       next:
         specifier: ^14.2.8
         version: 14.2.8(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
-      npx:
-        specifier: ^10.2.2
-        version: 10.2.2
       nuqs:
         specifier: ^2.1.1
         version: 2.1.1(next@14.2.8)(react@18.2.0)
@@ -156,21 +150,12 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      react-hook-form:
-        specifier: ^7.47.0
-        version: 7.49.3(react@18.2.0)
       tailwind-merge:
         specifier: ^1.14.0
         version: 1.14.0
-      valtio:
-        specifier: ^1.11.2
-        version: 1.13.0(@types/react@18.2.47)(react@18.2.0)
       vaul:
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@18.2.18)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0)
-      zod:
-        specifier: ^3.22.4
-        version: 3.22.4
     devDependencies:
       '@types/node':
         specifier: ^17.0.12
@@ -1428,14 +1413,6 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@hookform/resolvers@3.3.4(react-hook-form@7.49.3):
-    resolution: {integrity: sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==}
-    peerDependencies:
-      react-hook-form: ^7.0.0
-    dependencies:
-      react-hook-form: 7.49.3(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:
@@ -5739,14 +5716,6 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /derive-valtio@0.1.0(valtio@1.13.0):
-    resolution: {integrity: sha512-OCg2UsLbXK7GmmpzMXhYkdO64vhJ1ROUUGaTFyHjVwEdMEcTTRj7W1TxLbSBxdY8QLBPCcp66MTyaSy0RpO17A==}
-    peerDependencies:
-      valtio: '*'
-    dependencies:
-      valtio: 1.13.0(@types/react@18.2.47)(react@18.2.0)
-    dev: false
-
   /detect-indent@6.1.0:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
     engines: {node: '>=8'}
@@ -8347,14 +8316,6 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
-  /npx@10.2.2:
-    resolution: {integrity: sha512-eImmySusyeWphzs5iNh791XbZnZG0FSNvM4KSah34pdQQIDsdTDhIwg1sjN3AIVcjGLpbQ/YcfqHPshKZQK1fA==}
-    hasBin: true
-    dev: false
-    bundledDependencies:
-      - npm
-      - libnpx
-
   /nuqs@2.1.1(next@14.2.8)(react@18.2.0):
     resolution: {integrity: sha512-iM2H8lMmhvk9bxupUs2oRle9usRNEAqppOkTMXOxD/uK85gOKAubU7T2zmPo8fnYQS4n5e/XswTiq+gLYGpy3w==}
     peerDependencies:
@@ -8853,10 +8814,6 @@ packages:
     resolution: {integrity: sha512-/XJ368cyBJ7fzLMwLKv1e4vLxOju2MNAIokcr7meSaNcVbWz/CPcW22cP04mwxOErdA5mwjA8Q6w/cdAQxVn7Q==}
     dev: false
 
-  /proxy-compare@2.5.1:
-    resolution: {integrity: sha512-oyfc0Tx87Cpwva5ZXezSp5V9vht1c7dZBhvuV/y3ctkgMVUmiAGDVeeB0dKhGSyT0v1ZTEQYpe/RXlBVBNuCLA==}
-    dev: false
-
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: true
@@ -8982,15 +8939,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
-
-  /react-hook-form@7.49.3(react@18.2.0):
-    resolution: {integrity: sha512-foD6r3juidAT1cOZzpmD/gOKt7fRsDhXXZ0y28+Al1CHgX+AY1qIN9VSIIItXRq1dN68QrRwl1ORFlwjBaAqeQ==}
-    engines: {node: '>=18', pnpm: '8'}
-    peerDependencies:
-      react: ^16.8.0 || ^17 || ^18
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /react-intersection-observer@9.5.3(react@18.2.0):
@@ -10294,25 +10242,6 @@ packages:
       diff: 5.1.0
       kleur: 4.1.5
       sade: 1.8.1
-    dev: false
-
-  /valtio@1.13.0(@types/react@18.2.47)(react@18.2.0):
-    resolution: {integrity: sha512-s2VkxxFyaJwjpIheJonRa/34HWS1EpsEjw9OW9l3j8G4cbIw7lruspOjyv+z2o4BrGx351BH+VWb8sZHkrlyYA==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@types/react': '>=16.8'
-      react: '>=16.8'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react:
-        optional: true
-    dependencies:
-      '@types/react': 18.2.47
-      derive-valtio: 0.1.0(valtio@1.13.0)
-      proxy-compare: 2.5.1
-      react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
   /vaul@1.1.1(@types/react-dom@18.2.18)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0):
